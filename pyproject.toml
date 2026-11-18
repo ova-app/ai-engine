@@ -1,0 +1,28 @@
+[project]
+name = "ai-engine"
+version = "0.0.0"
+description = "Moteur IA : agent sur historique de séances et RAG sur appels d'offres publics."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.17.5",
+    "pytest==9.2.0",
+    "pre-commit==4.7.0",
+    "detect-secrets==1.5.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["context"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
