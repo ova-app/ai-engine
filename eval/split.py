@@ -65,8 +65,8 @@ def split_and_write(name: str, items: Sequence[dict], seed: int, sets_dir: Path 
         "locked_ids": [r["id"] for r in held],
         "sha256": {_DEV: _sha256(dev_bytes), _LOCKED: _sha256(held_bytes)},
     }
-    (target / _MANIFEST).write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    (target / _MANIFEST).write_bytes(
+        (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     )
     return manifest
 
