@@ -229,4 +229,4 @@ context/
 eval/traces/
 traces/
 *.sqlite
-# eval/results/ et les jeux verrouillés (*.locked.jsonl) SONT versionnés (EVAL.md §2, §8).
+# eval/results/ et les jeux verrouillés (eval/sets/*/locked.jsonl) SONT versionnés (EVAL.md §2, §8).
