@@ -43,7 +43,7 @@ Client A (app mobile)        Client B (démo web)
 
 ## Stack
 
-Python · FastAPI · Docker · AWS (ECR, ECS Fargate ou Lambda, à confirmer) · Terraform · GitHub Actions · Postgres + pgvector (Supabase) · API Claude et Mistral · Phoenix · Streamlit (démo) · LlamaIndex (ingestion de documents)
+Python · FastAPI · Docker · AWS (ECR, Lambda en image Docker) · Terraform · GitHub Actions · Postgres + pgvector (Supabase) · API Claude et Mistral · Phoenix · Streamlit (démo) · LlamaIndex (ingestion de documents)
 
 ## Évaluation
 
