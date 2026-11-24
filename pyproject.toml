@@ -5,10 +5,14 @@ description = "Moteur IA : agent sur historique de séances et RAG sur appels d'
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi==0.165.0",
+    "uvicorn==0.54.0",
+]
 
 [project.optional-dependencies]
 dev = [
+    "httpx==0.28.1",
     "ruff==0.17.5",
     "pytest==9.2.0",
     "pre-commit==4.7.0",
