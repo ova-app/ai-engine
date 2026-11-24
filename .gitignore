@@ -230,3 +230,11 @@ eval/traces/
 traces/
 *.sqlite
 # eval/results/ et les jeux verrouillés (eval/sets/*/locked.jsonl) SONT versionnés (EVAL.md §2, §8).
+
+# Terraform : état, plugins et valeurs locales (e-mail, etc.) jamais commités
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log

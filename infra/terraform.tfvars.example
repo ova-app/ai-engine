@@ -1,0 +1,2 @@
+# Copier en terraform.tfvars (ignoré par git) et remplir.
+budget_email = "vous@example.com"
