@@ -1,5 +1,9 @@
 locals {
-  github_repo = "ova-app/ai-engine"
+  # L'organisation utilise le sujet immuable de GitHub : le champ "sub" du jeton contient les
+  # identifiants numériques de l'organisation et du dépôt, pas leurs noms. Un dépôt renommé ou
+  # transféré ne peut donc pas reprendre le rôle. Lisible via :
+  #   gh api repos/ova-app/ai-engine/actions/oidc/customization/sub
+  github_subject_prefix = "repo:ova-app@295205648/ai-engine@1462991463"
 }
 
 # Fait confiance aux jetons signés par GitHub Actions. Aucune clé AWS stockée dans GitHub.
@@ -22,7 +26,7 @@ resource "aws_iam_role" "deploy" {
       Condition = {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          "token.actions.githubusercontent.com:sub" = "repo:${local.github_repo}:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub" = "${local.github_subject_prefix}:ref:refs/heads/main"
         }
       }
     }]
