@@ -12,6 +12,12 @@ RUN python -c "import tomllib; print('\n'.join(tomllib.load(open('pyproject.toml
 
 COPY app ./app
 
+# AWS Lambda Web Adapter : sur Lambda, traduit les événements en requêtes HTTP vers uvicorn.
+# Hors Lambda (docker run, ECS), l'extension est inerte.
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:1.1.0 /lambda-adapter /opt/extensions/lambda-adapter
+ENV AWS_LWA_PORT=8000 \
+    AWS_LWA_READINESS_CHECK_PATH=/health
+
 # Utilisateur sans droits : le conteneur ne tourne pas en root.
 RUN useradd --system --no-create-home appuser
 USER appuser
