@@ -100,3 +100,4 @@ Trois au maximum par phase, **déclarées ici avant toute mesure**. Une ablation
 | Date | Modification | Raison |
 |---|---|---|
 | 18/11/2026 | Version 0 | — |
+| 24/11/2026 | Note d'infrastructure, sans effet sur le protocole : l'alerte AWS Budgets fonctionne. Le compte AWS n'a pas de limite de dépense réglable : le plafond de crédits du compte la remplace. | Documenter le contrôle du coût réellement en place (règle 8 de CLAUDE.md). |
