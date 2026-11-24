@@ -1,0 +1,23 @@
+name: aws-oidc-check
+
+# Vérifie la connexion OIDC à AWS sans clé longue durée. Lancement à la demande, depuis main.
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write # nécessaire pour demander le jeton OIDC à GitHub
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: eu-north-1
+      # Lectures inoffensives, sans afficher d'identifiant de compte.
+      - name: Lire le dépôt ECR
+        run: aws ecr describe-repositories --repository-names ai-engine-api --query "repositories[0].repositoryName" --output text
+      - name: Lire l'état de la fonction Lambda
+        run: aws lambda get-function-configuration --function-name ai-engine-api --query "State" --output text
