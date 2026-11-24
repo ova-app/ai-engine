@@ -19,7 +19,7 @@ Le deuxième mot important est « mesures ». Le projet ne dit jamais « ça mar
 Le moteur sert deux usages très différents.
 
 | | Client A | Client B |
-|---|---|---|
+| --- | --- | --- |
 | Ce que c'est | Une application mobile de musculation | Un assistant d'appels d'offres publics |
 | Ce qu'on interroge | L'historique de séances d'un utilisateur | Des avis de marchés publics français |
 | Exemple de question | « Combien de séances ai-je faites depuis le 1er novembre ? » | « Quels marchés de nettoyage sont ouverts en Bretagne ? » |
@@ -52,7 +52,7 @@ Maintenant une question hors du rôle du moteur : « Que prendre contre une doul
 
 ## 4. Les blocs de l'architecture
 
-```
+```text
 Client A (app mobile)        Client B (démo web)
         │                            │
         └──────────┬─────────────────┘
@@ -83,7 +83,7 @@ Les blocs, du haut vers le bas :
 Le socle est la partie « installation ». Il est fait. Voici chaque brique, avec une image pour la comprendre.
 
 | Brique | À quoi ça sert | Image |
-|---|---|---|
+| --- | --- | --- |
 | Docker | Emballe le programme avec tout ce dont il a besoin | Une boîte de transport scellée : elle marche pareil chez toi et chez AWS |
 | ECR | Stocke les images Docker sur AWS | Un entrepôt de boîtes |
 | Lambda | Lance le programme seulement quand on l'appelle | Un employé payé à la tâche, pas au mois |
@@ -119,7 +119,7 @@ Le protocole est dans `EVAL.md`. Il est écrit avant les premiers tests. Quand o
 Jeux existants :
 
 | Fonction | Questions | Dont développement |
-|---|---|---|
+| --- | --- | --- |
 | Recherche d'exercices | 50 | 35 |
 | Coach (agent sur l'historique) | 60 | 42 |
 | Garde-fous | 20 (15 à refuser, 5 à ne pas refuser) | — |
@@ -127,7 +127,7 @@ Jeux existants :
 **Les mesures principales.**
 
 | Mesure | Ce qu'elle dit |
-|---|---|
+| --- | --- |
 | recall@5 | Part des requêtes dont un bon exercice est dans les 5 premiers résultats |
 | MRR | Plus le bon résultat arrive tôt, plus la note est haute |
 | Exactitude du coach | La valeur donnée est celle que calcule le SQL |
@@ -152,7 +152,7 @@ Jeux existants :
 Elles sont dans `CLAUDE.md`. Chacune évite un risque précis.
 
 | Règle | Pourquoi |
-|---|---|
+| --- | --- |
 | Évaluation d'abord | On ne peut pas truquer un test écrit après coup |
 | Jeu verrouillé intouchable | Sinon la note finale est biaisée |
 | Aucun chiffre inventé | Un chiffre faux publié détruit la confiance |
@@ -191,7 +191,7 @@ La phase 3 (génération de programmes, bilan de la semaine) est optionnelle.
 ## 9. Glossaire
 
 | Mot | Définition simple |
-|---|---|
+| --- | --- |
 | LLM | Modèle de langage : un programme qui écrit du texte (Claude, Mistral) |
 | Agent | Un programme qui décide quel outil appeler pour répondre |
 | Outil typé | Une fonction aux paramètres précis, que l'agent peut appeler |
