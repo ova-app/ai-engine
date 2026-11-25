@@ -1,4 +1,7 @@
-"""Recherche A1 sur un mini-catalogue synthétique. Demande DATABASE_URL (Postgres), sinon ignoré."""
+"""Recherche A1 sur un mini-catalogue synthétique.
+
+Demande TEST_DATABASE_URL (base jetable, recréée), sinon ignoré.
+"""
 
 import csv
 import os
@@ -31,9 +34,9 @@ def test_fold():
 @pytest.fixture(scope="module")
 def conn(tmp_path_factory):
     psycopg = pytest.importorskip("psycopg")
-    url = os.environ.get("DATABASE_URL")
+    url = os.environ.get("TEST_DATABASE_URL")
     if not url:
-        pytest.skip("DATABASE_URL non défini")
+        pytest.skip("TEST_DATABASE_URL non défini")
     path = tmp_path_factory.mktemp("cat") / "base.csv"
     with path.open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)

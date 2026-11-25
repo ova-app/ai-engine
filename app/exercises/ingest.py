@@ -4,11 +4,12 @@ Le catalogue n'est pas dans le dépôt (dossier `context/`, ignoré par git).
 
 Usage :
     python -m app.exercises.ingest context/exercices-extrait.csv \
-        [--texts context/catalogue-textes.csv]
+        [--texts context/catalogue-textes.csv] [--embed]
 
 Fichier de base (colonnes) : code, nom_fr, nom_en, muscles_primaires, muscles_secondaires,
 materiel (valeurs séparées par `|`). Fichier de textes, optionnel : code, description_fr, tags,
-key_points. L'URL de la base est lue dans DATABASE_URL.
+key_points. L'URL de la base est lue dans DATABASE_URL. `--embed` calcule les embeddings
+(mistral-embed, clé MISTRAL_API_KEY) du même texte que celui indexé en plein texte.
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from pathlib import Path
 
 import psycopg
 
+from app.exercises.embeddings import Embedder, MistralEmbedder, to_pgvector
 from app.exercises.text import EQUIPMENT_LABELS, MUSCLE_LABELS, fold
 
 SCHEMA = Path(__file__).with_name("schema.sql")
@@ -59,12 +61,17 @@ def read_catalogue(base: Path, texts: Path | None = None) -> list[dict]:
                 "body_fold": fold(" ".join(body)),
                 "primary": primary,
                 "secondary": secondary,
+                "doc": ". ".join(
+                    x for x in (r["nom_fr"], r["nom_en"], " ".join(meta), " ".join(body)) if x
+                ),
             }
         )
     return catalogue
 
 
-def load(conn: psycopg.Connection, catalogue: list[dict]) -> None:
+def load(conn: psycopg.Connection, catalogue: list[dict], embedder: Embedder | None = None) -> int:
+    """Recrée les tables et charge le catalogue. Renvoie les jetons d'embedding consommés."""
+    tokens = 0
     with conn.cursor() as cur:
         cur.execute(SCHEMA.read_text(encoding="utf-8"))
         for ex in catalogue:
@@ -82,18 +89,29 @@ def load(conn: psycopg.Connection, catalogue: list[dict]) -> None:
                         " ON CONFLICT DO NOTHING",
                         (ex["code"], muscle, role),
                     )
+        if embedder is not None:
+            result = embedder([ex["doc"] for ex in catalogue])
+            tokens = result.tokens
+            for ex, vec in zip(catalogue, result.vectors, strict=True):
+                cur.execute(
+                    "UPDATE exercises SET embedding = %s::vector WHERE code = %s",
+                    (to_pgvector(vec), ex["code"]),
+                )
     conn.commit()
+    return tokens
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("base", type=Path)
     parser.add_argument("--texts", type=Path)
+    parser.add_argument("--embed", action="store_true")
     args = parser.parse_args()
     catalogue = read_catalogue(args.base, args.texts)
+    embedder = MistralEmbedder() if args.embed else None
     with psycopg.connect(os.environ["DATABASE_URL"]) as conn:
-        load(conn, catalogue)
-    print(f"{len(catalogue)} exercices chargés")
+        tokens = load(conn, catalogue, embedder)
+    print(f"{len(catalogue)} exercices chargés, {tokens} jetons d'embedding")
 
 
 if __name__ == "__main__":

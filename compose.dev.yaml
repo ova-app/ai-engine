@@ -1,6 +1,8 @@
 # Postgres local pour le développement et les mesures (pas de ressource cloud).
 # Lancer : docker compose -f compose.dev.yaml up -d
-# URL    : postgresql://postgres:postgres@127.0.0.1:15432/aiengine
+# URL    : postgresql://postgres:postgres@127.0.0.1:15432/aiengine (mesures)
+# Tests  : base jetable aiengine_test, recréée par les tests (TEST_DATABASE_URL)
+#          docker compose -f compose.dev.yaml exec db createdb -U postgres aiengine_test
 services:
   db:
     image: pgvector/pgvector:pg17
