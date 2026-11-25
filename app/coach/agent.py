@@ -18,8 +18,8 @@ from typing import Any, Protocol
 from app.coach.tools import DEFINITIONS, Toolbox, ToolError
 from app.coach.verify import unsupported
 
-MODEL = "claude-opus-5-5"
-EFFORT = "medium"
+MODEL = "claude-sonnet-5-5"  # choix du mainteneur : coût
+EFFORT = "low"
 MAX_TOKENS = 8000  # plafond de sortie par appel (règle 8 de CLAUDE.md)
 MAX_TURNS = 8  # plafond d'appels au modèle par question
 
