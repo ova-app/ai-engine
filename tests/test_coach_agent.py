@@ -116,7 +116,8 @@ def test_requete_outils_stricts_sans_temperature(toolbox):
     assert all(t["strict"] and not t["input_schema"]["additionalProperties"] for t in req["tools"])
     for t in req["tools"]:
         assert set(t["input_schema"]["required"]) == set(t["input_schema"]["properties"])
-    assert req["output_config"] == {"effort": "medium"}
+    assert req["output_config"] == {"effort": "low"}
+    assert req["model"] == "claude-sonnet-5-5"
     assert "2026-11-01" in req["messages"][0]["content"]
 
 

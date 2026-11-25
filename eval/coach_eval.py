@@ -38,7 +38,7 @@ TODAY = date(2026, 11, 1)  # lendemain de la fin des données synthétiques : me
 # USD par million de jetons. Source : tarifs publics Anthropic, relevés le 03/11/2026.
 # Écriture en cache (5 min) = 1,25 × entrée.
 PRICES = {
-    "claude-opus-5-5": {"input": 4.0, "output": 20.0, "cache_read": 0.20, "cache_write": 5.0},
+    "claude-sonnet-5-5": {"input": 2.0, "output": 10.0, "cache_read": 0.10, "cache_write": 2.5},
 }
 
 

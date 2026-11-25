@@ -17,7 +17,7 @@ def absent_partout(**request):
     )  # fmt: skip
     usage = NS(input_tokens=1000, output_tokens=100, cache_read_input_tokens=0,
                cache_creation_input_tokens=0)  # fmt: skip
-    return NS(content=[block], stop_reason="tool_use", usage=usage, model="claude-opus-5-5")
+    return NS(content=[block], stop_reason="tool_use", usage=usage, model="claude-sonnet-5-5")
 
 
 def test_run_et_resume():
@@ -27,11 +27,11 @@ def test_run_et_resume():
     assert sum(r["exact"] for r in rows) == n_absent
     summary = summarize(rows)
     assert summary["global"]["n"] == len(items) and summary["non_terminees"] == 0
-    assert summary["cout_usd_par_question"] == round((1000 * 4 + 100 * 20) / 1e6, 5)
+    assert summary["cout_usd_par_question"] == round((1000 * 2 + 100 * 10) / 1e6, 5)
 
 
 def test_cout_inconnu_si_repli():
     usage = {"input_tokens": 1, "output_tokens": 1, "cache_read_input_tokens": 0,
              "cache_creation_input_tokens": 0}  # fmt: skip
-    assert cost_usd(["claude-opus-5-5", "autre"], usage) == "à mesurer"
+    assert cost_usd(["claude-sonnet-5-5", "autre"], usage) == "à mesurer"
     assert cost_usd([], usage) == "à mesurer"
