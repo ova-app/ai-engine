@@ -20,4 +20,5 @@ repos:
     hooks:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
-        exclude: ^eval/sets/[^/]+/manifest\.json$  # empreintes sha256, pas des secrets
+        # empreintes sha256 et hash de commit, pas des secrets
+        exclude: ^eval/(sets/[^/]+/manifest|results/[^/]+)\.json$
