@@ -26,10 +26,11 @@ class Workout:
 class SetRow:
     workout_id: str
     started_at: datetime  # début de la séance, UTC
-    code: str
+    code: str | None  # None : exercice personnalisé sans code
     set_type: str
     reps: int
     weight_kg: float
+    muscle_group: str | None = None  # champ `muscle_group` du catalogue de l'app
 
 
 class Store(Protocol):

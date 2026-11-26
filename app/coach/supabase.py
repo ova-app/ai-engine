@@ -18,7 +18,10 @@ from datetime import datetime
 
 from app.coach.data import SetRow, Workout
 
-SELECT = "id,started_at,workout_exercises(exercises(code),workout_sets(set_type,reps,weight_kg))"
+SELECT = (
+    "id,started_at,"
+    "workout_exercises(exercises(code,muscle_group),workout_sets(set_type,reps,weight_kg))"
+)
 PAGE = 1000
 
 Fetch = Callable[[str, dict[str, str]], list[dict]]
@@ -76,16 +79,17 @@ class SupabaseStore:
         for w in self._rows(start, end):
             started = _ts(w["started_at"])
             for we in w.get("workout_exercises") or []:
-                code = (we.get("exercises") or {}).get("code")
+                exercise = we.get("exercises") or {}
                 for s in we.get("workout_sets") or []:
                     out.append(
                         SetRow(
                             w["id"],
                             started,
-                            code,
+                            exercise.get("code"),
                             s["set_type"],
                             s["reps"] or 0,
                             float(s["weight_kg"] or 0),
+                            exercise.get("muscle_group"),
                         )
                     )
         return out

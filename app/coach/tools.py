@@ -8,7 +8,9 @@ Conventions (celles du jeu « coach », eval/sets/coach/README.md) :
 - séries d'échauffement exclues ; volume = Σ répétitions × kg ;
 - progression = charge max de la dernière séance de la période moins celle de la première ;
 - 1RM estimé (Epley) = kg × (1 + répétitions / 30) ;
-- répartition : muscle principal de l'exercice, en nombre de séries.
+- répartition : muscle principal de l'exercice, en nombre de séries ;
+- séance d'un groupe : au moins la moitié des séries (hors échauffement) sur un exercice dont
+  le `muscle_group` appartient au groupe.
 """
 
 from __future__ import annotations
@@ -19,6 +21,10 @@ from dataclasses import dataclass, field
 from datetime import date
 
 from app.coach.data import SetRow, Store, paris_bounds, paris_date, round_half_up
+
+# Liste fermée : groupe demandé -> valeurs de `muscle_group` du catalogue de l'app.
+GROUPS = {"jambes": ("quadriceps", "ischio_jambiers", "fessiers", "mollets")}
+GROUP_THRESHOLD = 50  # pourcentage minimal des séries hors échauffement
 
 
 class ToolError(ValueError):
@@ -78,6 +84,15 @@ DEFINITIONS: list[dict] = [
         "name": "seances",
         "description": "Nombre de séances commencées entre deux jours (inclus), et leurs dates.",
         "input_schema": _schema(debut=_DATE, fin=_FIN),
+    },
+    {
+        "name": "seances_par_groupe",
+        "description": "Séances d'un groupe musculaire entre deux jours inclus : nombre, dates "
+        "et règle appliquée. Une séance compte si au moins 50 % de ses séries hors échauffement "
+        "portent sur ce groupe. Seul groupe disponible : jambes.",
+        "input_schema": _schema(
+            debut=_DATE, fin=_FIN, groupe={"type": "string", "enum": list(GROUPS)}
+        ),
     },
     {
         "name": "volume",
@@ -146,6 +161,8 @@ class Toolbox:
         by_code: dict[str, set[str]] = defaultdict(set)
         last: dict[str, date] = {}
         for r in _work(self.store.sets(None, None)):
+            if r.code is None:  # sans code, aucun outil ne peut le désigner
+                continue
             by_code[r.code].add(r.workout_id)
             d = paris_date(r.started_at)
             last[r.code] = max(last.get(r.code, d), d)
@@ -159,6 +176,31 @@ class Toolbox:
         workouts = self.store.workouts(*paris_bounds(*_period(debut, fin)))
         dates = [paris_date(w.started_at).isoformat() for w in workouts]
         return ToolResult({"nombre": len(workouts), "dates": dates}, {w.id for w in workouts})
+
+    def seances_par_groupe(self, debut: str, fin: str, groupe: str) -> ToolResult:
+        if groupe not in GROUPS:
+            raise ToolError(f"groupe : valeurs possibles {list(GROUPS)}, reçu {groupe!r}")
+        counts: dict[str, list] = {}  # séance -> [début, séries du groupe, séries]
+        for r in _work(self.store.sets(*paris_bounds(*_period(debut, fin)))):
+            c = counts.setdefault(r.workout_id, [r.started_at, 0, 0])
+            c[1] += r.muscle_group in GROUPS[groupe]
+            c[2] += 1
+        kept = sorted(
+            (started, workout_id)
+            for workout_id, (started, in_group, total) in counts.items()
+            if 100 * in_group >= GROUP_THRESHOLD * total
+        )
+        content = {
+            "groupe": groupe,
+            "nombre": len(kept),
+            "dates": [paris_date(started).isoformat() for started, _ in kept],
+            "regle": {
+                "seuil_minimal_pourcentage": GROUP_THRESHOLD,
+                "series_comptees": "hors échauffement",
+                "muscle_group": list(GROUPS[groupe]),
+            },
+        }
+        return ToolResult(content, {workout_id for _, workout_id in kept})
 
     def _volume(self, debut: str, fin: str) -> tuple[float, set[str]]:
         bounds = paris_bounds(*_period(debut, fin))
