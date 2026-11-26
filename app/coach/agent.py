@@ -183,7 +183,8 @@ class Coach:
         return {
             "model": self.model,
             "max_tokens": MAX_TOKENS,
-            "system": SYSTEM,
+            # Point de cache après les outils et les consignes, communs à toutes les questions.
+            "system": [{"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}],
             "tools": [{**d, "strict": True} for d in [*DEFINITIONS, ANSWER_TOOL]],
             "output_config": {"effort": self.effort},
             "cache_control": {"type": "ephemeral"},  # le préfixe grandit d'un tour à l'autre
