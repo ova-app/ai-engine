@@ -78,6 +78,44 @@ EXERCISES: dict[str, str] = {
 }
 
 
+# code catalogue -> champ `muscle_group` du catalogue de l'app, relevé le 26/11/2026.
+EXERCISE_GROUPS: dict[str, str] = {
+    "goblet-squat": "quadriceps",
+    "barbell-squat": "quadriceps",
+    "machine-leg-extension": "quadriceps",
+    "lying-leg-curl-machine": "ischio_jambiers",
+    "hip-thrust": "ischio_jambiers",
+    "machine-leg-press": "fessiers",
+    "dumbbell-goblet-squat": "fessiers",
+    "kettlebell-swing": "fessiers",
+    "standing-calf-raise-machine": "mollets",
+    "machine-chest-press": "pectoraux",
+    "barbell-bench-press": "pectoraux",
+    "dumbbell-incline-bench-press": "pectoraux",
+    "dumbbell-bench-press": "pectoraux",
+    "push-up": "pectoraux",
+    "machine-pulldown": "dos",
+    "seated-cable-row": "dos",
+    "barbell-deadlift": "dos",
+    "pull-ups": "dos",
+    "barbell-bent-over-row": "dos",
+    "romanian-deadlift": "dos",
+    "dumbbell-row-unilateral": "dos",
+    "dumbbell-lateral-raise": "epaules",
+    "barbell-overhead-press": "epaules",
+    "cable-lateral-raise": "epaules",
+    "dumbbell-seated-overhead-press": "epaules",
+    "dumbbell-curl": "biceps",
+    "barbell-curl": "biceps",
+    "dumbbell-hammer-curl": "biceps",
+    "cable-rope-pushdown": "triceps",
+    "skull-crusher-ez-bar": "triceps",
+    "plank": "abdominaux",
+    "hanging-leg-raise": "abdominaux",
+    "farmer-walk": "avant_bras",
+}
+
+
 @dataclass(frozen=True)
 class Lift:
     """Prescription d'un exercice : charge de départ, pas de progression, séries x reps."""

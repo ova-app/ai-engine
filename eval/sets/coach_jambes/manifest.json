@@ -1,0 +1,34 @@
+{
+  "name": "coach_jambes",
+  "seed": 20261126,
+  "dev_fraction": 0.7,
+  "n_total": 20,
+  "dev_ids": [
+    "j01",
+    "j04",
+    "j05",
+    "j07",
+    "j08",
+    "j09",
+    "j11",
+    "j12",
+    "j13",
+    "j14",
+    "j17",
+    "j18",
+    "j19",
+    "j20"
+  ],
+  "locked_ids": [
+    "j02",
+    "j03",
+    "j06",
+    "j10",
+    "j15",
+    "j16"
+  ],
+  "sha256": {
+    "dev.jsonl": "3eb516311dff4008c073c050ac3317395ebd9ccf09cab0828526671926fa67e9",
+    "locked.jsonl": "05cf8985b6cee9fc57e97adeea00a2be7e47a80a92ad2606bd8b20db9165c40a"
+  }
+}
