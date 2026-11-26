@@ -1,7 +1,7 @@
 """Base SQLite locale, en mémoire, chargée avec `accounts.sql`.
 
 Sert à calculer les réponses du jeu « coach ». Reproduit uniquement les colonnes écrites par
-le générateur. Le catalogue est réduit à `EXERCISES` (code, muscle principal), avec des UUID
+le générateur. Le catalogue est réduit à `EXERCISES` (code, muscle principal, groupe), avec des UUID
 locaux : en Postgres, `exercise_id` est résolu par `code`, donc les UUID diffèrent mais les
 jointures par `code` donnent les mêmes résultats.
 """
@@ -12,11 +12,12 @@ import sqlite3
 import uuid
 from pathlib import Path
 
-from eval.synth.generate_accounts import EXERCISES, NAMESPACE, OUT
+from eval.synth.generate_accounts import EXERCISE_GROUPS, EXERCISES, NAMESPACE, OUT
 
 DDL = """
 CREATE TABLE exercises (
-  id TEXT PRIMARY KEY, code TEXT UNIQUE NOT NULL, owner_id TEXT, muscle_principal TEXT
+  id TEXT PRIMARY KEY, code TEXT UNIQUE NOT NULL, owner_id TEXT, muscle_principal TEXT,
+  muscle_group TEXT
 );
 CREATE TABLE workouts (
   id TEXT PRIMARY KEY, user_id TEXT NOT NULL, title TEXT, started_at TEXT, ended_at TEXT,
@@ -40,9 +41,15 @@ def connect(sql_path: Path = OUT) -> sqlite3.Connection:
     con.execute("PRAGMA foreign_keys = ON")
     con.executescript(DDL)
     con.executemany(
-        "INSERT INTO exercises (id, code, owner_id, muscle_principal) VALUES (?, ?, NULL, ?)",
+        "INSERT INTO exercises (id, code, owner_id, muscle_principal, muscle_group) "
+        "VALUES (?, ?, NULL, ?, ?)",
         [
-            (str(uuid.uuid5(NAMESPACE, f"exercise:{code}")), code, muscle)
+            (
+                str(uuid.uuid5(NAMESPACE, f"exercise:{code}")),
+                code,
+                muscle,
+                EXERCISE_GROUPS[code],
+            )
             for code, muscle in EXERCISES.items()
         ],
     )
