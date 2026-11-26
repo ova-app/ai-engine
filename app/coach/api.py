@@ -6,7 +6,8 @@ Ordre des contrôles, tous avant le premier appel payant :
 3. utilisateur inscrit dans COACH_ALLOWED_USERS, sinon 403. La liste ne doit contenir que des
    comptes du mainteneur ou de test : aucune donnée d'un tiers vers un LLM (règle 4).
 
-Les séances sont lues avec le jeton de l'utilisateur (RLS), jamais avec une clé de service.
+Les séances sont lues avec le jeton de l'utilisateur (RLS), jamais avec une clé de service,
+et filtrées sur son identifiant.
 Les journaux ne contiennent ni jeton, ni question, ni réponse.
 
 Variables : SUPABASE_URL, SUPABASE_ANON_KEY, ANTHROPIC_API_KEY, COACH_ALLOWED_USERS
@@ -83,11 +84,17 @@ def auth_lookup() -> Callable[[str, str, str], str | None]:
     return fetch_user_id
 
 
-def user_token(
+@dataclass(frozen=True)
+class User:
+    id: str
+    token: str
+
+
+def current_user(
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer)],
     config: Annotated[Settings, Depends(settings)],
     lookup: Annotated[Callable, Depends(auth_lookup)],
-) -> str:
+) -> User:
     refused = HTTPException(401, "jeton invalide", {"WWW-Authenticate": "Bearer"})
     if credentials is None:
         raise refused
@@ -99,14 +106,14 @@ def user_token(
         raise refused
     if user not in config.allowed_users:
         raise HTTPException(403, "compte non autorisé")
-    return credentials.credentials
+    return User(user, credentials.credentials)
 
 
 def user_store(
-    token: Annotated[str, Depends(user_token)],
+    user: Annotated[User, Depends(current_user)],
     config: Annotated[Settings, Depends(settings)],
 ) -> Store:
-    return SupabaseStore(config.supabase_url, config.anon_key, token)
+    return SupabaseStore(config.supabase_url, config.anon_key, user.token, user.id)
 
 
 @lru_cache

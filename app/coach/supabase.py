@@ -1,8 +1,9 @@
 """Magasin Supabase : lit les séances par l'API REST (PostgREST) avec le jeton de l'utilisateur.
 
-Le service n'envoie que la clé publique (anon) et le jeton de session de l'utilisateur. La
-sécurité par ligne (RLS) de Supabase filtre alors les lignes : jamais de clé de service ici
-(règle 5 de CLAUDE.md). Lecture seule, aucune requête SQL écrite par le modèle.
+Le service n'envoie que la clé publique (anon) et le jeton de session de l'utilisateur,
+jamais de clé de service (règle 5 de CLAUDE.md). La sécurité par ligne (RLS) ne suffit pas :
+elle laisse aussi lire les séances publiques d'autres comptes. Chaque requête filtre donc sur
+`user_id`. Lecture seule, aucune requête SQL écrite par le modèle.
 
 À vérifier sur le projet Supabase de test avant la mise en service : les relations
 imbriquées (`workout_exercises`, `exercises`, `workout_sets`) et la limite de lignes par page.
@@ -38,9 +39,13 @@ def _ts(value: str) -> datetime:
 
 
 class SupabaseStore:
-    def __init__(self, url: str, anon_key: str, user_jwt: str, fetch: Fetch = _fetch):
+    def __init__(self, url: str, anon_key: str, user_jwt: str, user_id: str, fetch: Fetch = _fetch):
+        """`user_id` : identifiant vérifié auprès de Supabase, jamais fourni par le client."""
         if not user_jwt:
             raise ValueError("jeton de l'utilisateur manquant")
+        if not user_id:
+            raise ValueError("identifiant de l'utilisateur manquant")
+        self.user_id = user_id
         self.base = url.rstrip("/") + "/rest/v1/workouts"
         self.headers = {
             "apikey": anon_key,
@@ -54,7 +59,11 @@ class SupabaseStore:
         key = (start, end)
         if key in self._cache:
             return self._cache[key]
-        params = [("select", SELECT), ("order", "started_at.asc,id.asc")]
+        params = [
+            ("select", SELECT),
+            ("user_id", f"eq.{self.user_id}"),
+            ("order", "started_at.asc,id.asc"),
+        ]
         if start is not None:
             params.append(("started_at", f"gte.{start.isoformat()}"))
         if end is not None:

@@ -34,7 +34,7 @@ class Fake:
 
 def test_jeton_utilisateur_et_cle_publique_seulement():
     fake = Fake([[WORKOUT]])
-    store = SupabaseStore("https://x.supabase.co/", "anon", "jwt-u", fetch=fake)
+    store = SupabaseStore("https://x.supabase.co/", "anon", "jwt-u", "u", fetch=fake)
     start = datetime(2026, 5, 31, 22, tzinfo=UTC)
     [w] = store.workouts(start, None)
     url, headers = fake.calls[0]
@@ -43,13 +43,14 @@ def test_jeton_utilisateur_et_cle_publique_seulement():
     assert url.startswith("https://x.supabase.co/rest/v1/workouts?")
     query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
     assert query["started_at"] == ["gte.2026-05-31T22:00:00+00:00"]
-    assert "user_id" not in query  # le filtrage par utilisateur revient à la RLS
+    # la RLS laisse lire les séances publiques d'autrui : filtre obligatoire
+    assert query["user_id"] == ["eq.u"]
     assert w.id == "w1" and w.started_at.tzinfo is not None
 
 
 def test_series_et_cache():
     fake = Fake([[WORKOUT]])
-    store = SupabaseStore("https://x", "anon", "jwt", fetch=fake)
+    store = SupabaseStore("https://x", "anon", "jwt", "u", fetch=fake)
     sets = store.sets(None, None)
     assert [(s.code, s.set_type, s.reps, s.weight_kg) for s in sets] == [
         ("plank", "normal", 45, 0.0),
@@ -71,7 +72,7 @@ def test_muscle_group_et_exercice_sans_code():
         ],
     }
     fake = Fake([[custom]])
-    store = SupabaseStore("https://x", "anon", "jwt", fetch=fake)
+    store = SupabaseStore("https://x", "anon", "jwt", "u", fetch=fake)
     [s] = store.sets(None, None)
     assert (s.code, s.muscle_group) == (None, "quadriceps")
     query = urllib.parse.parse_qs(urllib.parse.urlparse(fake.calls[0][0]).query)
@@ -85,11 +86,14 @@ def test_muscle_group_et_exercice_sans_code():
 
 def test_pagination():
     fake = Fake([[WORKOUT] * PAGE, [WORKOUT]])
-    store = SupabaseStore("https://x", "anon", "jwt", fetch=fake)
+    store = SupabaseStore("https://x", "anon", "jwt", "u", fetch=fake)
     assert len(store.workouts(None, None)) == PAGE + 1
     assert "offset=1000" in fake.calls[1][0]
+    assert all("user_id=eq.u" in url for url, _ in fake.calls)
 
 
 def test_sans_jeton_refuse():
     with pytest.raises(ValueError):
-        SupabaseStore("https://x", "anon", "")
+        SupabaseStore("https://x", "anon", "", "u")
+    with pytest.raises(ValueError):
+        SupabaseStore("https://x", "anon", "jwt", "")
