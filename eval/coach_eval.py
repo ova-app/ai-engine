@@ -1,12 +1,14 @@
 """Mesure du coach sur le jeu de développement (EVAL.md §3, §5, §8).
 
 Usage :
-    python -m eval.coach_eval [--limit N] [--budget-usd X] [--verifier]
+    python -m eval.coach_eval [--jeu NOM] [--limit N] [--budget-usd X] [--verifier]
+                              [--suffixe S]
 
 Demande ANTHROPIC_API_KEY. Les comptes de test sont lus dans la base SQLite construite depuis
 `eval/synth/accounts.sql`, un magasin par utilisateur. Ne lit que `dev.jsonl`.
-Écrit eval/results/<date>_coach_<modèle>.json. `--limit` sert aux essais : un résultat
-partiel n'est pas une mesure du §4.
+Écrit eval/results/<date>_<jeu>_<modèle>.json, sans jamais écraser un fichier : `--suffixe`
+distingue deux mesures du même jour. `--limit` sert aux essais : un résultat partiel n'est
+pas une mesure du §4.
 
 Coût : jetons facturés (`usage`) multipliés par le tarif public noté dans PRICES. Un modèle
 absent de PRICES (repli serveur) laisse le coût « à mesurer ».
@@ -33,6 +35,7 @@ from eval.synth.generate_accounts import EXERCISES
 from eval.synth.sqlite_db import connect
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
+JEUX = ("coach", "coach_jambes")
 TODAY = date(2026, 11, 1)  # lendemain de la fin des données synthétiques : mesure reproductible
 
 # USD par million de jetons. Source : tarifs publics Anthropic, relevés le 03/11/2026.
@@ -140,17 +143,36 @@ def summarize(rows: list[dict]) -> dict:
     }
 
 
+def result_path(
+    day: str, jeu: str, verify: bool = False, suffixe: str | None = None, essai: bool = False
+) -> Path:
+    suffix = (
+        ("_verif" if verify else "")
+        + (f"_{suffixe}" if suffixe else "")
+        + ("_essai" if essai else "")
+    )
+    return RESULTS_DIR / f"{day}_{jeu}_{MODEL}{suffix}.json"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--jeu", choices=JEUX, default="coach")
+    parser.add_argument("--suffixe", help="suffixe du fichier de résultats")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--budget-usd", type=float, help="plafond de dépense, en dollars")
     parser.add_argument("--verifier", action="store_true", help="variante A3 avec vérification")
     args = parser.parse_args()
-    items = load_dev("coach")[: args.limit]
+    day = date.today().isoformat()
+    # Vérifié avant tout appel payant.
+    for essai in (True,) if args.limit else (False, True):
+        path = result_path(day, args.jeu, args.verifier, args.suffixe, essai)
+        if path.exists():
+            parser.error(f"{path.name} existe déjà : choisir un autre --suffixe")
+    items = load_dev(args.jeu)[: args.limit]
     rows = run(items, AnthropicLLM(), verify=args.verifier, budget_usd=args.budget_usd)
     result = {
-        "date": date.today().isoformat(),
-        "fonction": "coach",
+        "date": day,
+        "fonction": args.jeu,
         "jeu": "développement"
         + (f" (essai, {len(items)} questions)" if args.limit else "")
         + (
@@ -179,9 +201,8 @@ def main() -> None:
         "questions": rows,
     }
     RESULTS_DIR.mkdir(exist_ok=True)
-    partial = args.limit or len(rows) < len(items)
-    suffix = ("_verif" if args.verifier else "") + ("_essai" if partial else "")
-    path = RESULTS_DIR / f"{result['date']}_coach_{MODEL}{suffix}.json"
+    partial = bool(args.limit) or len(rows) < len(items)
+    path = result_path(day, args.jeu, args.verifier, args.suffixe, partial)
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result["mesures"]["global"], ensure_ascii=False))
     print(path)

@@ -43,11 +43,11 @@ class SqliteStore:
     def sets(self, start: datetime | None, end: datetime | None) -> list[SetRow]:
         clause, params = _range(start, end)
         rows = self.con.execute(
-            "SELECT w.id, w.started_at, e.code, s.set_type, s.reps, s.weight_kg "
+            "SELECT w.id, w.started_at, e.code, s.set_type, s.reps, s.weight_kg, e.muscle_group "
             "FROM workout_sets s JOIN workout_exercises we ON we.id = s.workout_exercise_id "
             "JOIN workouts w ON w.id = we.workout_id JOIN exercises e ON e.id = we.exercise_id "
             f"WHERE w.user_id = ?{clause} ORDER BY w.started_at, w.id, we.order_index, "
             "s.set_number",
             [self.user_id, *params],
         ).fetchall()
-        return [SetRow(i, _ts(t), c, st, r or 0, float(k or 0)) for i, t, c, st, r, k in rows]
+        return [SetRow(i, _ts(t), c, st, r or 0, float(k or 0), g) for i, t, c, st, r, k, g in rows]

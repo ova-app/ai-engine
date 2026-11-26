@@ -2,7 +2,7 @@
 
 from types import SimpleNamespace as NS
 
-from eval.coach_eval import cost_usd, run, summarize
+from eval.coach_eval import JEUX, cost_usd, result_path, run, summarize
 from eval.datasets import load_dev
 
 
@@ -43,3 +43,12 @@ def test_plafond_de_depense():
     rows = run(items, absent_partout, budget_usd=2.5 * unit)
     assert len(rows) == 3  # 0, 1 et 2 unités dépensées avant la 3e ; 3 unités atteint le plafond
     assert len(run(items, absent_partout, budget_usd=0)) == 0
+
+
+def test_jeu_jambes_et_nom_de_fichier():
+    assert JEUX == ("coach", "coach_jambes")
+    items = load_dev("coach_jambes")
+    assert len(run(items, absent_partout)) == len(items)
+    name = result_path("2026-11-26", "coach_jambes", suffixe="groupe", essai=True).name
+    assert name == "2026-11-26_coach_jambes_claude-sonnet-5-5_groupe_essai.json"
+    assert result_path("2026-11-26", "coach").name == "2026-11-26_coach_claude-sonnet-5-5.json"

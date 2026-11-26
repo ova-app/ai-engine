@@ -6,6 +6,7 @@ from datetime import UTC, datetime
 import pytest
 
 from app.coach.supabase import PAGE, SupabaseStore
+from app.coach.tools import Toolbox
 
 WORKOUT = {
     "id": "w1",
@@ -56,6 +57,30 @@ def test_series_et_cache():
     ]
     store.workouts(None, None)
     assert len(fake.calls) == 1
+
+
+def test_muscle_group_et_exercice_sans_code():
+    custom = {
+        "id": "w2",
+        "started_at": "2026-06-02T17:00:00+00:00",
+        "workout_exercises": [
+            {
+                "exercises": {"code": None, "muscle_group": "quadriceps"},
+                "workout_sets": [{"set_type": "normal", "reps": 10, "weight_kg": 20}],
+            }
+        ],
+    }
+    fake = Fake([[custom]])
+    store = SupabaseStore("https://x", "anon", "jwt", fetch=fake)
+    [s] = store.sets(None, None)
+    assert (s.code, s.muscle_group) == (None, "quadriceps")
+    query = urllib.parse.parse_qs(urllib.parse.urlparse(fake.calls[0][0]).query)
+    assert "exercises(code,muscle_group)" in query["select"][0]
+    toolbox = Toolbox(store, {})
+    assert toolbox.exercices_pratiques().content["exercices"] == []
+    fake.pages.append([custom])
+    result = toolbox.seances_par_groupe("2026-06-01", "2026-06-07", "jambes")
+    assert result.content["nombre"] == 1 and result.sessions == {"w2"}
 
 
 def test_pagination():
