@@ -9,7 +9,7 @@ Moteur IA public : un service Python sur AWS, deux clients aux données séparé
 4. **Dépôt public : aucun secret, aucune donnée réelle.** Données synthétiques ou comptes de test. Clés en secrets GitHub du dépôt, AWS par OIDC. Aucune donnée d'un tiers vers un LLM.
 5. **Données isolées par client.** Un client ne lit jamais la base de l'autre. L'agent lit avec le jeton de l'utilisateur (RLS), jamais avec une clé de service.
 6. **Outils d'agent typés.** Pas de SQL libre généré par le modèle.
-7. **Pas de conseil de santé ou de blessure.** Refus testé dans `eval/guardrails.jsonl`.
+7. **Pas de diagnostic ni de traitement.** Douleur ou blessure : le coach propose des variantes d'exercices, sans les présenter comme un soin, puis conseille de consulter un médecin. Symptômes généraux (vertiges, malaise) : refus. Comportement testé dans `eval/guardrails.jsonl`.
 8. **Coût sous contrôle.** Cible sous ~20 €/mois. Alerte de budget AWS, plafond par requête, coût par question mesuré.
 
 ## Façon de travailler
