@@ -5,7 +5,7 @@ from types import SimpleNamespace as NS
 
 import pytest
 
-from app.coach.agent import MAX_TURNS, AnthropicLLM, Coach
+from app.coach.agent import MAX_TURNS, SYSTEM, AnthropicLLM, Coach
 from app.coach.tools import Toolbox
 from eval.coach.store import SqliteStore
 from eval.synth.generate_accounts import EXERCISES, user_id
@@ -119,6 +119,19 @@ def test_requete_outils_stricts_sans_temperature(toolbox):
     assert req["output_config"] == {"effort": "low"}
     assert req["model"] == "claude-sonnet-5-5"
     assert "2026-11-01" in req["messages"][0]["content"]
+
+
+def test_prefixe_commun_en_cache(toolbox):
+    llm = Scripted(*[message(NS(type="text", text="ok"), stop="end_turn") for _ in range(2)])
+    Coach(llm, toolbox).ask("première", TODAY)
+    Coach(llm, toolbox).ask("seconde", TODAY)
+    first, second = llm.requests
+    # point de cache sur les consignes : outils et consignes relus d'une question à l'autre
+    assert first["system"] == [
+        {"type": "text", "text": SYSTEM, "cache_control": {"type": "ephemeral"}}
+    ]
+    assert (first["system"], first["tools"]) == (second["system"], second["tools"])
+    assert first["cache_control"] == {"type": "ephemeral"}
 
 
 def test_client_anthropic_repli_serveur():

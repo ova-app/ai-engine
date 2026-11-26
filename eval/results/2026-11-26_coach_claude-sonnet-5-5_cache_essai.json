@@ -1,0 +1,533 @@
+{
+  "date": "2026-11-26",
+  "fonction": "coach",
+  "jeu": "développement (essai, 3 questions)",
+  "plafond_usd": 0.05,
+  "code": {
+    "commit": "86e1462610fc9e554b55c2a2e229dc5252843e3c",
+    "modifie": false
+  },
+  "modele_demande": "claude-sonnet-5-5",
+  "modeles_ayant_repondu": [
+    "claude-sonnet-5-5"
+  ],
+  "reglages": {
+    "effort": "low",
+    "max_tokens": 8000,
+    "max_tours": 8,
+    "temperature": "non réglable (refusée par l'API sur ce modèle)",
+    "repli_serveur": "server-side-fallback-2026-07-01",
+    "date_du_jour_donnee": "2026-11-01",
+    "verification_des_chiffres": false
+  },
+  "tarifs_usd_par_million": {
+    "claude-sonnet-5-5": {
+      "input": 2.0,
+      "output": 10.0,
+      "cache_read": 0.1,
+      "cache_write": 2.5
+    }
+  },
+  "mesures": {
+    "global": {
+      "n": 3,
+      "exact": {
+        "valeur": 1.0,
+        "ic95": [
+          1.0,
+          1.0
+        ]
+      },
+      "precision_seances": {
+        "valeur": 1.0,
+        "ic95": [
+          1.0,
+          1.0
+        ]
+      },
+      "rappel_seances": {
+        "valeur": 1.0,
+        "ic95": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "par_gabarit": {
+      "progression": {
+        "n": 3,
+        "exact": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        },
+        "precision_seances": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        },
+        "rappel_seances": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "latence_ms": {
+      "mediane": 4831.1,
+      "p95": 4855.3
+    },
+    "cout_usd_par_question": 0.01045,
+    "non_terminees": 0,
+    "remplacees_par_la_verification": 0
+  },
+  "questions": [
+    {
+      "id": "c01",
+      "template": "progression",
+      "question": "De combien a évolué ma charge maximale au soulevé de terre roumain entre le 14/06/2026 et le 31/08/2026 ?",
+      "attendu": {
+        "type": "kg",
+        "value": 7.5
+      },
+      "reponse": {
+        "texte": "Ta charge max au soulevé de terre roumain a progressé de 7,5 kg entre le 14/06 et le 31/08/2026 : elle est passée de 100 kg (16/06) à 107,5 kg (25/08).",
+        "valeur": 7.5,
+        "unite": "kg",
+        "aucune_donnee": false,
+        "terminee": true
+      },
+      "exact": 1.0,
+      "precision_seances": 1.0,
+      "rappel_seances": 1.0,
+      "outils": [
+        {
+          "outil": "exercices_pratiques",
+          "arguments": {},
+          "resultat": {
+            "ref": "r1",
+            "exercices": [
+              {
+                "code": "barbell-bench-press",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "barbell-bent-over-row",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "barbell-curl",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "barbell-deadlift",
+                "seances": 20,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "barbell-overhead-press",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "barbell-squat",
+                "seances": 41,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "cable-lateral-raise",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "dumbbell-incline-bench-press",
+                "seances": 40,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "hanging-leg-raise",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "hip-thrust",
+                "seances": 20,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "lying-leg-curl-machine",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "pull-ups",
+                "seances": 40,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "romanian-deadlift",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "skull-crusher-ez-bar",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "standing-calf-raise-machine",
+                "seances": 41,
+                "derniere_date": "2026-10-31"
+              }
+            ]
+          }
+        },
+        {
+          "outil": "progression",
+          "arguments": {
+            "exercice": "romanian-deadlift",
+            "debut": "2026-06-14",
+            "fin": "2026-08-31"
+          },
+          "resultat": {
+            "ref": "r2",
+            "donnee": true,
+            "exercice": "romanian-deadlift",
+            "premiere_seance": {
+              "date": "2026-06-16",
+              "charge_max_kg": 100.0
+            },
+            "derniere_seance": {
+              "date": "2026-08-25",
+              "charge_max_kg": 107.5
+            },
+            "evolution_kg": 7.5,
+            "seances_dans_la_periode": 11
+          }
+        },
+        {
+          "outil": "repondre",
+          "arguments": {
+            "texte": "Ta charge max au soulevé de terre roumain a progressé de 7,5 kg entre le 14/06 et le 31/08/2026 : elle est passée de 100 kg (16/06) à 107,5 kg (25/08).",
+            "valeur": 7.5,
+            "unite": "kg",
+            "aucune_donnee": false,
+            "sources": [
+              "r2"
+            ]
+          }
+        }
+      ],
+      "verification": {
+        "rejets": [],
+        "reecritures": 0,
+        "remplacee": false
+      },
+      "tours": 3,
+      "modeles": [
+        "claude-sonnet-5-5"
+      ],
+      "jetons": {
+        "input_tokens": 8,
+        "output_tokens": 365,
+        "cache_read_input_tokens": 8823,
+        "cache_creation_input_tokens": 4972
+      },
+      "cout_usd": 0.016978299999999998,
+      "latency_ms": 4721.792799886316
+    },
+    {
+      "id": "c04",
+      "template": "progression",
+      "question": "De combien a évolué ma charge maximale au développé incliné haltères entre le 16/07/2026 et le 13/10/2026 ?",
+      "attendu": {
+        "type": "kg",
+        "value": 12.0
+      },
+      "reponse": {
+        "texte": "Ta charge maximale au développé incliné haltères a augmenté de 12 kg : elle est passée de 36 kg le 16/07/2026 à 48 kg le 12/10/2026, dernière séance de la période.",
+        "valeur": 12.0,
+        "unite": "kg",
+        "aucune_donnee": false,
+        "terminee": true
+      },
+      "exact": 1.0,
+      "precision_seances": 1.0,
+      "rappel_seances": 1.0,
+      "outils": [
+        {
+          "outil": "exercices_pratiques",
+          "arguments": {},
+          "resultat": {
+            "ref": "r1",
+            "exercices": [
+              {
+                "code": "barbell-bench-press",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "barbell-bent-over-row",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "barbell-curl",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "barbell-deadlift",
+                "seances": 20,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "barbell-overhead-press",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "barbell-squat",
+                "seances": 41,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "cable-lateral-raise",
+                "seances": 20,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "dumbbell-incline-bench-press",
+                "seances": 40,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "hanging-leg-raise",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "hip-thrust",
+                "seances": 20,
+                "derniere_date": "2026-10-31"
+              },
+              {
+                "code": "lying-leg-curl-machine",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "pull-ups",
+                "seances": 40,
+                "derniere_date": "2026-10-29"
+              },
+              {
+                "code": "romanian-deadlift",
+                "seances": 21,
+                "derniere_date": "2026-10-27"
+              },
+              {
+                "code": "skull-crusher-ez-bar",
+                "seances": 20,
+                "derniere_date": "2026-10-26"
+              },
+              {
+                "code": "standing-calf-raise-machine",
+                "seances": 41,
+                "derniere_date": "2026-10-31"
+              }
+            ]
+          }
+        },
+        {
+          "outil": "progression",
+          "arguments": {
+            "exercice": "dumbbell-incline-bench-press",
+            "debut": "2026-07-16",
+            "fin": "2026-10-13"
+          },
+          "resultat": {
+            "ref": "r2",
+            "donnee": true,
+            "exercice": "dumbbell-incline-bench-press",
+            "premiere_seance": {
+              "date": "2026-07-16",
+              "charge_max_kg": 36.0
+            },
+            "derniere_seance": {
+              "date": "2026-10-12",
+              "charge_max_kg": 48.0
+            },
+            "evolution_kg": 12.0,
+            "seances_dans_la_periode": 24
+          }
+        },
+        {
+          "outil": "repondre",
+          "arguments": {
+            "texte": "Ta charge maximale au développé incliné haltères a augmenté de 12 kg : elle est passée de 36 kg le 16/07/2026 à 48 kg le 12/10/2026, dernière séance de la période.",
+            "valeur": 12,
+            "unite": "kg",
+            "aucune_donnee": false,
+            "sources": [
+              "r2"
+            ]
+          }
+        }
+      ],
+      "verification": {
+        "rejets": [],
+        "reecritures": 0,
+        "remplacee": false
+      },
+      "tours": 3,
+      "modeles": [
+        "claude-sonnet-5-5"
+      ],
+      "jetons": {
+        "input_tokens": 8,
+        "output_tokens": 364,
+        "cache_read_input_tokens": 12775,
+        "cache_creation_input_tokens": 1024
+      },
+      "cout_usd": 0.0074935,
+      "latency_ms": 4831.123200012371
+    },
+    {
+      "id": "c06",
+      "template": "progression",
+      "question": "De combien a évolué ma charge maximale à la presse à cuisses entre le 01/06/2026 et le 01/08/2026 ?",
+      "attendu": {
+        "type": "kg",
+        "value": 40.0
+      },
+      "reponse": {
+        "texte": "Ta charge maximale à la presse à cuisses a augmenté de 40 kg entre le 01/06/2026 et le 01/08/2026. Elle est passée de 60 kg (séance du 01/06) à 100 kg (séance du 31/07).",
+        "valeur": 40.0,
+        "unite": "kg",
+        "aucune_donnee": false,
+        "terminee": true
+      },
+      "exact": 1.0,
+      "precision_seances": 1.0,
+      "rappel_seances": 1.0,
+      "outils": [
+        {
+          "outil": "exercices_pratiques",
+          "arguments": {},
+          "resultat": {
+            "ref": "r1",
+            "exercices": [
+              {
+                "code": "cable-rope-pushdown",
+                "seances": 19,
+                "derniere_date": "2026-10-28"
+              },
+              {
+                "code": "dumbbell-curl",
+                "seances": 19,
+                "derniere_date": "2026-10-28"
+              },
+              {
+                "code": "dumbbell-lateral-raise",
+                "seances": 19,
+                "derniere_date": "2026-10-28"
+              },
+              {
+                "code": "goblet-squat",
+                "seances": 19,
+                "derniere_date": "2026-10-28"
+              },
+              {
+                "code": "machine-chest-press",
+                "seances": 42,
+                "derniere_date": "2026-10-30"
+              },
+              {
+                "code": "machine-leg-press",
+                "seances": 42,
+                "derniere_date": "2026-10-30"
+              },
+              {
+                "code": "machine-pulldown",
+                "seances": 42,
+                "derniere_date": "2026-10-30"
+              },
+              {
+                "code": "plank",
+                "seances": 42,
+                "derniere_date": "2026-10-30"
+              },
+              {
+                "code": "seated-cable-row",
+                "seances": 19,
+                "derniere_date": "2026-10-28"
+              }
+            ]
+          }
+        },
+        {
+          "outil": "progression",
+          "arguments": {
+            "exercice": "machine-leg-press",
+            "debut": "2026-06-01",
+            "fin": "2026-08-01"
+          },
+          "resultat": {
+            "ref": "r2",
+            "donnee": true,
+            "exercice": "machine-leg-press",
+            "premiere_seance": {
+              "date": "2026-06-01",
+              "charge_max_kg": 60.0
+            },
+            "derniere_seance": {
+              "date": "2026-07-31",
+              "charge_max_kg": 100.0
+            },
+            "evolution_kg": 40.0,
+            "seances_dans_la_periode": 17
+          }
+        },
+        {
+          "outil": "repondre",
+          "arguments": {
+            "texte": "Ta charge maximale à la presse à cuisses a augmenté de 40 kg entre le 01/06/2026 et le 01/08/2026. Elle est passée de 60 kg (séance du 01/06) à 100 kg (séance du 31/07).",
+            "valeur": 40,
+            "unite": "kg",
+            "aucune_donnee": false,
+            "sources": [
+              "r2"
+            ]
+          }
+        }
+      ],
+      "verification": {
+        "rejets": [],
+        "reecritures": 0,
+        "remplacee": false
+      },
+      "tours": 3,
+      "modeles": [
+        "claude-sonnet-5-5"
+      ],
+      "jetons": {
+        "input_tokens": 8,
+        "output_tokens": 370,
+        "cache_read_input_tokens": 12530,
+        "cache_creation_input_tokens": 767
+      },
+      "cout_usd": 0.0068865,
+      "latency_ms": 4855.330300051719
+    }
+  ]
+}
