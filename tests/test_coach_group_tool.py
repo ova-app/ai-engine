@@ -4,11 +4,11 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
+from app.coach.catalogue import EXERCISES
 from app.coach.data import SetRow, paris_date
 from app.coach.tools import SCHEMAS, Toolbox, ToolError
 from eval.coach.store import SqliteStore
 from eval.datasets import load_dev
-from eval.synth.generate_accounts import EXERCISES
 from eval.synth.sqlite_db import connect
 
 ITEMS = load_dev("coach_jambes")

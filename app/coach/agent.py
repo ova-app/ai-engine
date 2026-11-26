@@ -11,10 +11,11 @@ Le modèle ne fait aucun calcul ni aucune requête : il choisit des outils typé
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import date
 from typing import Any, Protocol
 
+from app.coach.pricing import cost_usd
 from app.coach.tools import DEFINITIONS, Toolbox, ToolError
 from app.coach.verify import unsupported
 
@@ -174,10 +175,16 @@ class Coach:
         model: str = MODEL,
         effort: str = EFFORT,
         verify: bool = False,
+        max_cost_usd: float | None = None,
     ):
-        """`verify` : variante « avec vérification des chiffres » de l'ablation A3."""
+        """`verify` : variante « avec vérification des chiffres » de l'ablation A3.
+
+        `max_cost_usd` : plafond par question. Aucun nouvel appel une fois le plafond atteint,
+        ou si le coût est inconnu. L'appel en cours n'est pas interrompu.
+        """
         self.llm, self.toolbox, self.model, self.effort = llm, toolbox, model, effort
         self.verify = verify
+        self.max_cost_usd = max_cost_usd
 
     def request(self, messages: list) -> dict:
         return {
@@ -198,6 +205,8 @@ class Coach:
         refs: dict[str, set[str]] = {}
         answer = CoachAnswer("", None, None, False, set(), finished=False)
         for _ in range(MAX_TURNS):
+            if answer.turns and self._over_budget(answer):
+                break
             response = self.llm(**self.request(messages))
             answer.turns += 1
             answer.usage.add(response.usage)
@@ -227,6 +236,12 @@ class Coach:
                     results.append(self._run_tool(block, refs, answer))
             messages.append({"role": "user", "content": results})
         return answer
+
+    def _over_budget(self, answer: CoachAnswer) -> bool:
+        if self.max_cost_usd is None:
+            return False
+        cost = cost_usd(answer.models, asdict(answer.usage))
+        return not isinstance(cost, float) or cost >= self.max_cost_usd
 
     def _check(self, answer: CoachAnswer, args: dict) -> list[float]:
         """A3 : nombres de la réponse non soutenus par les outils (vide sans vérification)."""

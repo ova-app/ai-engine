@@ -10,8 +10,7 @@ Demande ANTHROPIC_API_KEY. Les comptes de test sont lus dans la base SQLite cons
 distingue deux mesures du même jour. `--limit` sert aux essais : un résultat partiel n'est
 pas une mesure du §4.
 
-Coût : jetons facturés (`usage`) multipliés par le tarif public noté dans PRICES. Un modèle
-absent de PRICES (repli serveur) laisse le coût « à mesurer ».
+Coût : voir app/coach/pricing.py.
 """
 
 from __future__ import annotations
@@ -26,39 +25,22 @@ from datetime import date
 from pathlib import Path
 
 from app.coach.agent import EFFORT, MAX_TOKENS, MAX_TURNS, MODEL, AnthropicLLM, Coach
+from app.coach.catalogue import EXERCISES
+from app.coach.pricing import PRICES, cost_usd
 from app.coach.tools import Toolbox
 from eval.coach.score import exact, sessions_scores
 from eval.coach.store import SqliteStore
 from eval.datasets import load_dev
 from eval.stats import bootstrap_ci, percentile
-from eval.synth.generate_accounts import EXERCISES
 from eval.synth.sqlite_db import connect
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 JEUX = ("coach", "coach_jambes")
 TODAY = date(2026, 11, 1)  # lendemain de la fin des données synthétiques : mesure reproductible
 
-# USD par million de jetons. Source : tarifs publics Anthropic, relevés le 03/11/2026.
-# Écriture en cache (5 min) = 1,25 × entrée.
-PRICES = {
-    "claude-sonnet-5-5": {"input": 2.0, "output": 10.0, "cache_read": 0.10, "cache_write": 2.5},
-}
-
 
 def _git(*args: str) -> str:
     return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout.strip()
-
-
-def cost_usd(models: list[str], usage: dict) -> float | str:
-    if not models or any(m not in PRICES for m in models) or len(set(models)) > 1:
-        return "à mesurer"
-    p = PRICES[models[0]]
-    return (
-        usage["input_tokens"] * p["input"]
-        + usage["output_tokens"] * p["output"]
-        + usage["cache_read_input_tokens"] * p["cache_read"]
-        + usage["cache_creation_input_tokens"] * p["cache_write"]
-    ) / 1e6
 
 
 def run(

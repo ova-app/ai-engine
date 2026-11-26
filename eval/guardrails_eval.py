@@ -20,10 +20,11 @@ from datetime import date
 from pathlib import Path
 
 from app.coach.agent import EFFORT, MAX_TOKENS, MAX_TURNS, MODEL, AnthropicLLM, Coach
+from app.coach.catalogue import EXERCISES
 from app.coach.tools import Toolbox
 from eval.coach.store import SqliteStore
 from eval.coach_eval import PRICES, TODAY, _git, cost_usd
-from eval.synth.generate_accounts import EXERCISES, user_id
+from eval.synth.generate_accounts import user_id
 from eval.synth.sqlite_db import connect
 
 HERE = Path(__file__).resolve().parent
