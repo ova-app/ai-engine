@@ -1,0 +1,795 @@
+{
+  "date": "2026-11-25",
+  "fonction": "recherche d'exercices",
+  "variante": "a1",
+  "jeu": "développement",
+  "code": {
+    "commit": "f778b64d8c4e09e7e9ac6be6065d3f9ad94c3865",
+    "modifie": false
+  },
+  "catalogue": {
+    "n": 276,
+    "sha256_base": "05c71c4842c9125befe349d7e2ca6ff381e4fe2d793f7f60bc4dc6fcda6b86fe",
+    "sha256_textes": "4c63a61a7988667b4551c4434cf70eb4df20e665d66d9b333c8266586548c869"
+  },
+  "modele": "aucun (pas d'appel de modèle)",
+  "cout_eur_par_question": 0,
+  "mesures": {
+    "global": {
+      "n": 35,
+      "recall@5": {
+        "valeur": 0.8571,
+        "ic95": [
+          0.7429,
+          0.9714
+        ]
+      },
+      "MRR": {
+        "valeur": 0.7494,
+        "ic95": [
+          0.6285,
+          0.8644
+        ]
+      }
+    },
+    "par_categorie": {
+      "description": {
+        "n": 9,
+        "recall@5": {
+          "valeur": 0.7778,
+          "ic95": [
+            0.4444,
+            1.0
+          ]
+        },
+        "MRR": {
+          "valeur": 0.679,
+          "ic95": [
+            0.4136,
+            0.9012
+          ]
+        }
+      },
+      "faute": {
+        "n": 7,
+        "recall@5": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        },
+        "MRR": {
+          "valeur": 0.7143,
+          "ic95": [
+            0.4643,
+            0.9286
+          ]
+        }
+      },
+      "filtre": {
+        "n": 6,
+        "recall@5": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        },
+        "MRR": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "nom_exact": {
+        "n": 6,
+        "recall@5": {
+          "valeur": 1.0,
+          "ic95": [
+            1.0,
+            1.0
+          ]
+        },
+        "MRR": {
+          "valeur": 0.875,
+          "ic95": [
+            0.625,
+            1.0
+          ]
+        }
+      },
+      "synonyme": {
+        "n": 7,
+        "recall@5": {
+          "valeur": 0.5714,
+          "ic95": [
+            0.1429,
+            0.8571
+          ]
+        },
+        "MRR": {
+          "valeur": 0.5526,
+          "ic95": [
+            0.2515,
+            0.8571
+          ]
+        }
+      }
+    },
+    "latence_ms": {
+      "mediane": 13.56,
+      "p95": 26.25
+    }
+  },
+  "questions": [
+    {
+      "id": "ex04",
+      "category": "nom_exact",
+      "query": "Hip Thrust barre",
+      "results": [
+        "hip-thrust",
+        "kettlebell-hip-thrust",
+        "dumbbell-figure-four-heels-elevated-hip-thrust",
+        "dumbbell-heels-elevated-hip-thrust",
+        "machine-hip-thrust",
+        "single-leg-hip-thrust",
+        "barbell-thruster",
+        "barbell-snatch",
+        "barbell-step-up-knee-drive",
+        "dumbbell-thruster"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 27.612300124019384
+    },
+    {
+      "id": "ex06",
+      "category": "nom_exact",
+      "query": "Tirage horizontal poulie",
+      "results": [
+        "seated-cable-row",
+        "single-arm-cable-pulldown",
+        "wide-cable-row",
+        "cable-row-bar-standing-row",
+        "cable-supinating-row",
+        "band-kneeling-pulldown",
+        "cable-single-arm-neutral-grip-row",
+        "cable-chest-press",
+        "cable-bar-pushdown",
+        "cable-hammer-curl"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 22.02549995854497
+    },
+    {
+      "id": "ex07",
+      "category": "nom_exact",
+      "query": "Leg extension machine",
+      "results": [
+        "machine-leg-extension",
+        "machine-plate-loaded-leg-extension",
+        "back-extension-machine",
+        "triceps-machine",
+        "lying-leg-curl-machine",
+        "seated-leg-curl-machine",
+        "machine-45-degree-back-extension",
+        "machine-cable-v-bar-push-downs",
+        "glute-kickback-machine",
+        "machine-leg-press"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 20.58120002038777
+    },
+    {
+      "id": "ex08",
+      "category": "nom_exact",
+      "query": "Dragon Flag",
+      "results": [
+        "dragon-flag",
+        "barbell-drag-curl",
+        "dumbbell-rear-delt-fly",
+        "dumbbell-seated-rear-delt-fly",
+        "abdominals-stretch-variation-four",
+        "back-extension-machine",
+        "band-hip-abduction",
+        "barbell-front-rack-step-up-knee-drive",
+        "barbell-step-up-knee-drive",
+        "bodyweight-hip-abduction"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 21.17700013332069
+    },
+    {
+      "id": "ex09",
+      "category": "nom_exact",
+      "query": "Romanian Deadlift",
+      "results": [
+        "band-romanian-deadlift",
+        "dumbbell-cross-body-romanian-deadlift",
+        "kettlebell-romanian-deadlift",
+        "romanian-deadlift",
+        "smith-machine-sumo-romanian-deadlift",
+        "single-legged-romanian-deadlifts",
+        "barbell-deadlift",
+        "bodyweight-deadlift",
+        "kettlebell-sumo-deadlift",
+        "straight-leg-deadlift"
+      ],
+      "hit5": 1.0,
+      "rr": 0.25,
+      "latency_ms": 26.249799877405167
+    },
+    {
+      "id": "ex10",
+      "category": "nom_exact",
+      "query": "Pec deck machine",
+      "results": [
+        "machine-pec-fly",
+        "machine-chest-press",
+        "smith-machine-incline-bench-press",
+        "glute-kickback-machine",
+        "machine-dips",
+        "machine-plate-loaded-leg-extension",
+        "machine-pulldown",
+        "hack-squat-machine",
+        "hip-abduction-machine",
+        "lateral-raise-machine"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 22.201099898666143
+    },
+    {
+      "id": "ex12",
+      "category": "synonyme",
+      "query": "pompes classiques",
+      "results": [
+        "bodyweight-elevated-push-up",
+        "incline-push-up",
+        "bodyweight-knee-push-ups",
+        "decline-push-up",
+        "diamond-push-ups",
+        "close-grip-push-up",
+        "wide-push-up",
+        "push-up",
+        "burpee",
+        "dumbbell-rear-delt-fly"
+      ],
+      "hit5": 0.0,
+      "rr": 0.125,
+      "latency_ms": 14.170899987220764
+    },
+    {
+      "id": "ex13",
+      "category": "synonyme",
+      "query": "soulevé de terre",
+      "results": [
+        "kettlebell-sumo-deadlift",
+        "smith-machine-sumo-romanian-deadlift",
+        "bodyweight-deadlift",
+        "band-romanian-deadlift",
+        "barbell-stiff-leg-deadlifts",
+        "dumbbell-cross-body-romanian-deadlift",
+        "kettlebell-romanian-deadlift",
+        "romanian-deadlift",
+        "straight-leg-deadlift",
+        "barbell-deadlift"
+      ],
+      "hit5": 0.0,
+      "rr": 0.1,
+      "latency_ms": 15.315499855205417
+    },
+    {
+      "id": "ex16",
+      "category": "synonyme",
+      "query": "leg press",
+      "results": [
+        "calf-press-on-leg-press",
+        "single-leg-press",
+        "machine-leg-press",
+        "dumbbell-leg-curl",
+        "machine-leg-extension",
+        "machine-plate-loaded-leg-extension",
+        "kettlebell-push-press",
+        "dumbbell-decline-bench-press",
+        "arnold-press",
+        "barbell-bench-press"
+      ],
+      "hit5": 1.0,
+      "rr": 0.5,
+      "latency_ms": 12.213400099426508
+    },
+    {
+      "id": "ex17",
+      "category": "synonyme",
+      "query": "skull crusher",
+      "results": [
+        "skull-crusher-ez-bar",
+        "dumbbell-skullcrusher",
+        "dumbbell-decline-skullcrusher",
+        "cable-crunch",
+        "cable-rope-kneeling-face-pull",
+        "cable-seated-rope-face-pull",
+        "dumbbell-cross-body-romanian-deadlift",
+        "dumbbell-preacher-curl",
+        "ez-bar-preacher-curl",
+        "ez-bar-reverse-preacher-curl"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 13.563400134444237
+    },
+    {
+      "id": "ex18",
+      "category": "synonyme",
+      "query": "gainage",
+      "results": [
+        "plank",
+        "side-plank",
+        "ab-wheel-rollout",
+        "hand-plank",
+        "hanging-knee-raises",
+        "barbell-overhead-press",
+        "dragon-flag",
+        "barbell-front-rack-step-up-knee-drive",
+        "cable-side-bend",
+        "close-grip-push-up"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 12.230099877342582
+    },
+    {
+      "id": "ex19",
+      "category": "synonyme",
+      "query": "élévations latérales",
+      "results": [
+        "band-lateral-raise",
+        "band-single-arm-lateral-raise",
+        "dumbbell-lateral-raise",
+        "cable-lateral-raise",
+        "lateral-raise-machine",
+        "bodyweight-alternating-lateral-lunge",
+        "lateral-lunge",
+        "dumbbell-side-bend",
+        "elbow-side-plank",
+        "side-plank"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 8.23340006172657
+    },
+    {
+      "id": "ex20",
+      "category": "synonyme",
+      "query": "butterfly pectoraux",
+      "results": [
+        "cable-pec-fly",
+        "cable-chest-press",
+        "chest-dips",
+        "machine-chest-press",
+        "cable-standing-single-arm-chest-press",
+        "dumbbell-single-arm-chest-press",
+        "machine-pec-fly",
+        "cable-bench-chest-fly",
+        "dumbbell-chest-fly",
+        "dumbbell-decline-chest-fly"
+      ],
+      "hit5": 0.0,
+      "rr": 0.14285714285714285,
+      "latency_ms": 13.750300044193864
+    },
+    {
+      "id": "ex23",
+      "category": "faute",
+      "query": "devlopé couché altères",
+      "results": [
+        "dumbbell-bench-press",
+        "dumbbell-chest-fly",
+        "barbell-close-grip-bench-press",
+        "smith-machine-bench-press",
+        "cable-bench-press",
+        "barbell-bench-press",
+        "kettlebell-bench-press",
+        "smith-machine-close-grip-bench-press",
+        "cable-bench-chest-fly",
+        "lying-leg-curl-machine"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 13.959200121462345
+    },
+    {
+      "id": "ex24",
+      "category": "faute",
+      "query": "squatt barre",
+      "results": [
+        "barbell-split-squat",
+        "barbell-snatch",
+        "barbell-step-up-knee-drive",
+        "barbell-squat",
+        "barbell-bent-over-row",
+        "barbell-clean-and-press",
+        "barbell-close-grip-bench-press",
+        "barbell-deadlift",
+        "barbell-drag-curl",
+        "barbell-front-rack-step-up-knee-drive"
+      ],
+      "hit5": 1.0,
+      "rr": 0.25,
+      "latency_ms": 9.773399913683534
+    },
+    {
+      "id": "ex26",
+      "category": "faute",
+      "query": "curl pupître EZ",
+      "results": [
+        "ez-bar-preacher-curl",
+        "ez-bar-reverse-preacher-curl",
+        "reverse-ez-bar-curl",
+        "ez-bar-curl",
+        "dumbbell-preacher-curl",
+        "dumbbell-hammer-curl",
+        "dumbbell-standing-single-arm-hammer-curl",
+        "band-curl",
+        "barbell-curl",
+        "barbell-drag-curl"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 8.443400030955672
+    },
+    {
+      "id": "ex27",
+      "category": "faute",
+      "query": "hip trust",
+      "results": [
+        "dumbbell-figure-four-heels-elevated-hip-thrust",
+        "dumbbell-heels-elevated-hip-thrust",
+        "hip-thrust",
+        "kettlebell-hip-thrust",
+        "machine-hip-thrust",
+        "single-leg-hip-thrust",
+        "band-hip-abduction",
+        "bodyweight-hip-abduction",
+        "hip-abduction-machine",
+        "dumbbell-feet-elevated-glute-bridge"
+      ],
+      "hit5": 1.0,
+      "rr": 0.5,
+      "latency_ms": 9.143600007519126
+    },
+    {
+      "id": "ex29",
+      "category": "faute",
+      "query": "shrugg haltère",
+      "results": [
+        "dumbbell-single-arm-clean-and-press",
+        "dumbbell-incline-chest-fly",
+        "dumbbell-upright-row",
+        "dumbbell-shrug",
+        "dumbbell-goblet-forward-lunge",
+        "dumbbell-goblet-reverse-lunge",
+        "dumbbell-goblet-squat",
+        "dumbbell-heels-elevated-hip-thrust",
+        "dumbbell-leg-curl",
+        "dumbbell-pullover"
+      ],
+      "hit5": 1.0,
+      "rr": 0.25,
+      "latency_ms": 7.493800017982721
+    },
+    {
+      "id": "ex30",
+      "category": "faute",
+      "query": "kettlebel swing",
+      "results": [
+        "kettlebell-swing",
+        "kettlebell-goblet-curl",
+        "kettlebell-push-press",
+        "kettlebell-row-single",
+        "kettlebell-assisted-bulgarian-split-squat",
+        "kettlebell-bench-press",
+        "kettlebell-farmers-carry",
+        "kettlebell-gorilla-row",
+        "kettlebell-romanian-deadlift",
+        "kettlebell-spinal-jefferson-curl"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 11.065499857068062
+    },
+    {
+      "id": "ex31",
+      "category": "faute",
+      "query": "souleve de terre sumo",
+      "results": [
+        "kettlebell-sumo-deadlift",
+        "smith-machine-sumo-romanian-deadlift",
+        "bodyweight-deadlift",
+        "band-romanian-deadlift",
+        "barbell-stiff-leg-deadlifts",
+        "dumbbell-cross-body-romanian-deadlift",
+        "kettlebell-romanian-deadlift",
+        "romanian-deadlift",
+        "straight-leg-deadlift",
+        "barbell-deadlift"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 9.14790015667677
+    },
+    {
+      "id": "ex33",
+      "category": "description",
+      "query": "travailler les fessiers à la maison sans matériel",
+      "results": [
+        "cable-bench-straight-leg-kickback",
+        "dumbbell-feet-elevated-glute-bridge",
+        "machine-seated-cable-row",
+        "cable-rope-kneeling-face-pull",
+        "cable-single-arm-neutral-grip-row",
+        "dumbbell-sumo-squat",
+        "machine-leg-press",
+        "kettlebell-hip-thrust",
+        "glute-bridge",
+        "bodyweight-alternating-reverse-lunges"
+      ],
+      "hit5": 0.0,
+      "rr": 0.1111111111111111,
+      "latency_ms": 20.87549981661141
+    },
+    {
+      "id": "ex34",
+      "category": "description",
+      "query": "mollets en position assise",
+      "results": [
+        "seated-calf-raise-machine",
+        "kettlebell-calf-raise",
+        "calf-press-on-leg-press",
+        "dumbbell-single-leg-calf-raise",
+        "single-leg-calf-raise",
+        "standing-calf-raise-machine",
+        "bodyweight-calf-raise",
+        "cable-seated-rope-face-pull",
+        "band-seated-pulldown",
+        "bodyweight-donkey-calf-raise"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 14.447699999436736
+    },
+    {
+      "id": "ex35",
+      "category": "description",
+      "query": "renforcer les avant-bras et la poigne",
+      "results": [
+        "ez-bar-reverse-preacher-curl",
+        "dumbbell-wrist-curl",
+        "barbell-wrist-curl",
+        "dumbbell-wrist-extension",
+        "dumbbell-hammer-curl",
+        "dumbbell-incline-hammer-curl",
+        "reverse-wrist-curl",
+        "dumbbell-standing-single-arm-hammer-curl",
+        "reverse-ez-bar-curl",
+        "kettlebell-farmers-carry"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 15.35100000910461
+    },
+    {
+      "id": "ex36",
+      "category": "description",
+      "query": "travailler l'arrière des épaules",
+      "results": [
+        "dumbbell-single-arm-clean-and-press",
+        "dumbbell-seated-rear-delt-fly",
+        "barbell-clean-and-press",
+        "barbell-upright-row",
+        "dumbbell-lateral-raise",
+        "machine-face-pulls",
+        "bodyweight-alternating-reverse-lunges",
+        "bodyweight-reverse-lunge",
+        "reverse-lunge-barbell",
+        "barbell-overhead-press"
+      ],
+      "hit5": 1.0,
+      "rr": 0.5,
+      "latency_ms": 12.478100135922432
+    },
+    {
+      "id": "ex37",
+      "category": "description",
+      "query": "isoler le triceps à la poulie",
+      "results": [
+        "cable-bar-pushdown",
+        "machine-cable-v-bar-push-downs",
+        "cable-single-arm-rope-pushdown",
+        "cable-rope-kneeling-face-pull",
+        "overhead-cable-extension",
+        "cable-rope-pushdown",
+        "cable-bench-press",
+        "cable-chest-press",
+        "cable-incline-bench-press",
+        "cable-standing-single-arm-chest-press"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 17.221900168806314
+    },
+    {
+      "id": "ex38",
+      "category": "description",
+      "query": "mouvement d'haltérophilie explosif",
+      "results": [
+        "dumbbell-single-arm-clean-and-press",
+        "kettlebell-thruster",
+        "dumbbell-thruster",
+        "jump-squat",
+        "burpee",
+        "kettlebell-swing",
+        "dumbbell-upright-row",
+        "barbell-step-up-knee-drive",
+        "barbell-close-grip-bench-press",
+        "barbell-thruster"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 17.1038000844419
+    },
+    {
+      "id": "ex39",
+      "category": "description",
+      "query": "exercice cardio au poids du corps qui fait transpirer",
+      "results": [
+        "bodyweight-squat",
+        "jump-squat",
+        "bodyweight-box-squat",
+        "bodyweight-calf-raise",
+        "bodyweight-hip-abduction",
+        "bodyweight-spinal-jefferson-curl",
+        "bodyweight-alternating-reverse-lunges",
+        "bodyweight-elevated-push-up",
+        "bodyweight-russian-twist",
+        "bodyweight-alternating-lateral-lunge"
+      ],
+      "hit5": 1.0,
+      "rr": 0.5,
+      "latency_ms": 28.121900046244264
+    },
+    {
+      "id": "ex40",
+      "category": "description",
+      "query": "biceps sans haltères ni barre",
+      "results": [
+        "dumbbell-decline-skullcrusher",
+        "dumbbell-curl",
+        "dumbbell-incline-curl",
+        "dumbbell-concentration-curl",
+        "dumbbell-skullcrusher",
+        "dumbbell-feet-elevated-glute-bridge",
+        "dumbbell-standing-single-arm-curl",
+        "ez-bar-preacher-curl",
+        "alternating-dumbbell-curl",
+        "dumbbell-bench-press"
+      ],
+      "hit5": 0.0,
+      "rr": 0.0,
+      "latency_ms": 19.951700000092387
+    },
+    {
+      "id": "ex41",
+      "category": "description",
+      "query": "étirer les abdominaux",
+      "results": [
+        "abdominals-stretch-variation-two",
+        "abdominals-stretch-variation-one",
+        "abdominals-stretch-variation-three",
+        "abdominals-stretch-variation-four",
+        "abdominal-vacuum",
+        "hand-plank",
+        "ab-wheel-rollout",
+        "kettlebell-incline-bench-press",
+        "cable-bar-face-pull",
+        "machine-seated-cable-row"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 11.79179991595447
+    },
+    {
+      "id": "ex43",
+      "category": "filtre",
+      "query": "épaules kettlebell",
+      "results": [
+        "kettlebell-front-raise",
+        "kettlebell-push-press",
+        "kettlebell-seated-overhead-press",
+        "kettlebell-thruster"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 2.4542000610381365
+    },
+    {
+      "id": "ex45",
+      "category": "filtre",
+      "query": "trapèzes barre",
+      "results": [
+        "barbell-upright-row",
+        "barbell-behind-the-back-30-degree-shrug",
+        "barbell-shrug",
+        "barbell-rack-pull"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 1.9969998393207788
+    },
+    {
+      "id": "ex46",
+      "category": "filtre",
+      "query": "abdos poulie",
+      "results": [
+        "cable-crunch",
+        "cable-woodchop",
+        "cable-side-bend",
+        "cable-standing-low-to-high-wood-chopper",
+        "cable-wood-chopper"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 1.8974000122398138
+    },
+    {
+      "id": "ex47",
+      "category": "filtre",
+      "query": "quadriceps poids du corps",
+      "results": [
+        "jump-squat",
+        "wall-sit",
+        "bulgarian-split-squat"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 3.5639998968690634
+    },
+    {
+      "id": "ex48",
+      "category": "filtre",
+      "query": "dos élastique",
+      "results": [
+        "band-pullover",
+        "band-row",
+        "band-kneeling-pulldown",
+        "band-seated-pulldown"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 4.455099813640118
+    },
+    {
+      "id": "ex50",
+      "category": "filtre",
+      "query": "triceps haltères",
+      "results": [
+        "dumbbell-tricep-kickback",
+        "dumbbell-seated-overhead-tricep-extension",
+        "overhead-triceps-extension",
+        "dumbbell-decline-skullcrusher",
+        "dumbbell-skullcrusher",
+        "dumbbell-pullover"
+      ],
+      "hit5": 1.0,
+      "rr": 1.0,
+      "latency_ms": 3.6147998180240393
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# Postgres local pour le développement et les mesures (pas de ressource cloud).
+# Lancer : docker compose -f compose.dev.yaml up -d
+# URL    : postgresql://postgres:postgres@127.0.0.1:15432/aiengine
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_PASSWORD: postgres  # pragma: allowlist secret
+      POSTGRES_DB: aiengine
+    ports:
+      - "127.0.0.1:15432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata:
