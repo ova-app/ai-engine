@@ -1,7 +1,7 @@
 """Mesure du coach sur le jeu de développement (EVAL.md §3, §5, §8).
 
 Usage :
-    python -m eval.coach_eval [--limit N]
+    python -m eval.coach_eval [--limit N] [--budget-usd X] [--verifier]
 
 Demande ANTHROPIC_API_KEY. Les comptes de test sont lus dans la base SQLite construite depuis
 `eval/synth/accounts.sql`, un magasin par utilisateur. Ne lit que `dev.jsonl`.
@@ -58,15 +58,31 @@ def cost_usd(models: list[str], usage: dict) -> float | str:
     ) / 1e6
 
 
-def run(items: list[dict], llm, model: str = MODEL, verify: bool = False) -> list[dict]:
+def run(
+    items: list[dict],
+    llm,
+    model: str = MODEL,
+    verify: bool = False,
+    budget_usd: float | None = None,
+) -> list[dict]:
+    """`budget_usd` : s'arrête avant la question suivante dès que le coût cumulé l'atteint.
+
+    Une question en cours n'est pas interrompue : le dépassement maximal est celui d'une
+    question. Un coût inconnu (modèle hors PRICES) arrête aussi la mesure.
+    """
     con = connect()
     rows = []
+    spent = 0.0
     for item in items:
+        if budget_usd is not None and (spent >= budget_usd or spent != spent):
+            break
         toolbox = Toolbox(SqliteStore(con, item["user_id"]), EXERCISES)
         coach = Coach(llm, toolbox, model=model, verify=verify)
         start = time.perf_counter()
         answer = coach.ask(item["question"], TODAY)
         latency_ms = (time.perf_counter() - start) * 1000
+        cost = cost_usd(answer.models, asdict(answer.usage))
+        spent = spent + cost if isinstance(cost, float) else float("nan")
         precision, recall = sessions_scores(answer.sessions, set(item["expected_sessions"]))
         usage = asdict(answer.usage)
         rows.append(
@@ -127,14 +143,22 @@ def summarize(rows: list[dict]) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--budget-usd", type=float, help="plafond de dépense, en dollars")
     parser.add_argument("--verifier", action="store_true", help="variante A3 avec vérification")
     args = parser.parse_args()
     items = load_dev("coach")[: args.limit]
-    rows = run(items, AnthropicLLM(), verify=args.verifier)
+    rows = run(items, AnthropicLLM(), verify=args.verifier, budget_usd=args.budget_usd)
     result = {
         "date": date.today().isoformat(),
         "fonction": "coach",
-        "jeu": "développement" + (f" (essai, {len(items)} questions)" if args.limit else ""),
+        "jeu": "développement"
+        + (f" (essai, {len(items)} questions)" if args.limit else "")
+        + (
+            f" (arrêté par le plafond : {len(rows)}/{len(items)} questions)"
+            if len(rows) < len(items)
+            else ""
+        ),
+        "plafond_usd": args.budget_usd,
         "code": {
             "commit": _git("rev-parse", "HEAD"),
             "modifie": bool(_git("status", "--porcelain")),
@@ -155,7 +179,8 @@ def main() -> None:
         "questions": rows,
     }
     RESULTS_DIR.mkdir(exist_ok=True)
-    suffix = ("_verif" if args.verifier else "") + ("_essai" if args.limit else "")
+    partial = args.limit or len(rows) < len(items)
+    suffix = ("_verif" if args.verifier else "") + ("_essai" if partial else "")
     path = RESULTS_DIR / f"{result['date']}_coach_{MODEL}{suffix}.json"
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result["mesures"]["global"], ensure_ascii=False))

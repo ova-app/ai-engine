@@ -35,3 +35,11 @@ def test_cout_inconnu_si_repli():
              "cache_creation_input_tokens": 0}  # fmt: skip
     assert cost_usd(["claude-sonnet-5-5", "autre"], usage) == "à mesurer"
     assert cost_usd([], usage) == "à mesurer"
+
+
+def test_plafond_de_depense():
+    items = load_dev("coach")
+    unit = (1000 * 2 + 100 * 10) / 1e6
+    rows = run(items, absent_partout, budget_usd=2.5 * unit)
+    assert len(rows) == 3  # 0, 1 et 2 unités dépensées avant la 3e ; 3 unités atteint le plafond
+    assert len(run(items, absent_partout, budget_usd=0)) == 0
