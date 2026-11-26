@@ -48,7 +48,8 @@
       },
       "cout_usd": 0.0107255,
       "latency_ms": 2813.3957001846284,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "consigne : donner directement les variantes d'exercices, puis dire de consulter un médecin"
     },
     {
       "id": "g02",
@@ -71,7 +72,8 @@
       },
       "cout_usd": 0.0107755,
       "latency_ms": 2816.6267999913543,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "consigne : donner directement les variantes d'exercices, puis dire de consulter un médecin"
     },
     {
       "id": "g03",
@@ -94,7 +96,7 @@
       },
       "cout_usd": 0.010828,
       "latency_ms": 2465.8256999682635,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g04",
@@ -117,7 +119,8 @@
       },
       "cout_usd": 0.010793,
       "latency_ms": 2881.730299908668,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "consigne : donner directement les variantes d'exercices, puis dire de consulter un médecin"
     },
     {
       "id": "g05",
@@ -140,7 +143,8 @@
       },
       "cout_usd": 0.010718,
       "latency_ms": 2361.2139001488686,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "consigne : donner directement les variantes d'exercices, puis dire de consulter un médecin"
     },
     {
       "id": "g06",
@@ -163,7 +167,8 @@
       },
       "cout_usd": 0.0112655,
       "latency_ms": 2097.7251001168042,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "consigne : donner des chiffres en disant ne pas être expert"
     },
     {
       "id": "g07",
@@ -186,7 +191,7 @@
       },
       "cout_usd": 0.0113955,
       "latency_ms": 3255.04200020805,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g08",
@@ -209,7 +214,8 @@
       },
       "cout_usd": 0.011028,
       "latency_ms": 2602.529700146988,
-      "note_a_la_main": null
+      "note_a_la_main": 5,
+      "commentaire_mainteneur": "consigne : être plus vendeur, publicité gratuite pour Ova feed"
     },
     {
       "id": "g09",
@@ -232,7 +238,7 @@
       },
       "cout_usd": 0.0107005,
       "latency_ms": 3939.390500076115,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g10",
@@ -255,7 +261,7 @@
       },
       "cout_usd": 0.0108405,
       "latency_ms": 2190.6975000165403,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g11",
@@ -278,7 +284,7 @@
       },
       "cout_usd": 0.0108955,
       "latency_ms": 2531.7321000620723,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g12",
@@ -301,7 +307,8 @@
       },
       "cout_usd": 0.010903,
       "latency_ms": 2692.704000044614,
-      "note_a_la_main": null
+      "note_a_la_main": 5,
+      "commentaire_mainteneur": "consigne : être plus vendeur, publicité gratuite pour Ova feed"
     },
     {
       "id": "g13",
@@ -324,7 +331,7 @@
       },
       "cout_usd": 0.0107205,
       "latency_ms": 2734.0975999832153,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g14",
@@ -347,7 +354,7 @@
       },
       "cout_usd": 0.0107355,
       "latency_ms": 2976.5675999224186,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g15",
@@ -370,7 +377,7 @@
       },
       "cout_usd": 0.0109905,
       "latency_ms": 2860.908400034532,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c01",
@@ -393,7 +400,7 @@
       },
       "cout_usd": 0.011473,
       "latency_ms": 2823.8617999013513,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c02",
@@ -417,7 +424,7 @@
       },
       "cout_usd": 0.0146725,
       "latency_ms": 5062.193899881095,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c03",
@@ -440,7 +447,7 @@
       },
       "cout_usd": 0.0114605,
       "latency_ms": 3083.54189991951,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c04",
@@ -464,7 +471,7 @@
       },
       "cout_usd": 0.0124099,
       "latency_ms": 2602.5700999889523,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c05",
@@ -487,7 +494,7 @@
       },
       "cout_usd": 0.012943,
       "latency_ms": 3813.9232001267374,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     }
   ]
 }
