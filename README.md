@@ -93,7 +93,7 @@ _À mesurer : coût moyen par question pour chaque fonction._
 - Les jeux de référence et les comptes de test sont synthétiques ou appartiennent au mainteneur. Aucune donnée d'un tiers n'est envoyée à un LLM.
 - Aucun secret dans ce dépôt. Les clés vivent dans les secrets GitHub du dépôt, et AWS est appelé par connexion OIDC.
 - Le corpus d'appels d'offres vient du BOAMP (open data, Licence Ouverte Etalab).
-- Le moteur ne donne aucun conseil de santé ou de blessure : ces questions sont refusées, et ce refus est testé.
+- Le moteur ne pose aucun diagnostic et ne propose aucun traitement. Pour une douleur ou une blessure, il propose des variantes d'exercices puis conseille de consulter un médecin. Les symptômes généraux sont refusés. Ce comportement est testé.
 
 ## Limites connues
 
