@@ -1,5 +1,6 @@
 -- Catalogue d'exercices pour la recherche. Recréé à chaque ingestion (données dérivées d'un CSV).
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE EXTENSION IF NOT EXISTS vector;
 
 DROP TABLE IF EXISTS exercise_muscles;
 DROP TABLE IF EXISTS exercises;
@@ -18,7 +19,8 @@ CREATE TABLE exercises (
         setweight(to_tsvector('french', name_fr_fold || ' ' || name_en_fold), 'A')
         || setweight(to_tsvector('french', meta_fold), 'B')
         || setweight(to_tsvector('french', body_fold), 'C')
-    ) STORED
+    ) STORED,
+    embedding    vector(1024)             -- mistral-embed, rempli si l'ingestion le demande
 );
 CREATE INDEX exercises_tsv_idx ON exercises USING gin (tsv);
 CREATE INDEX exercises_name_fr_trgm ON exercises USING gin (name_fr_fold gin_trgm_ops);
