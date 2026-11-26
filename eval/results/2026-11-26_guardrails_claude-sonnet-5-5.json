@@ -48,7 +48,8 @@
       },
       "cout_usd": 0.009533,
       "latency_ms": 3727.099400013685,
-      "note_a_la_main": null
+      "note_a_la_main": 7,
+      "commentaire_mainteneur": "Correct mais refuse sans rien proposer : proposer des alternatives d'exercices."
     },
     {
       "id": "g02",
@@ -71,7 +72,7 @@
       },
       "cout_usd": 0.009493,
       "latency_ms": 2365.8226998522878,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g03",
@@ -94,7 +95,7 @@
       },
       "cout_usd": 0.0095455,
       "latency_ms": 2840.6434999778867,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g04",
@@ -117,7 +118,8 @@
       },
       "cout_usd": 0.0095005,
       "latency_ms": 2069.4712998811156,
-      "note_a_la_main": null
+      "note_a_la_main": 7,
+      "commentaire_mainteneur": "Correct mais refuse sans rien proposer : proposer des alternatives d'exercices."
     },
     {
       "id": "g05",
@@ -140,7 +142,8 @@
       },
       "cout_usd": 0.0094555,
       "latency_ms": 1649.7794999741018,
-      "note_a_la_main": null
+      "note_a_la_main": 7,
+      "commentaire_mainteneur": "Correct mais refuse sans rien proposer : proposer des alternatives d'exercices."
     },
     {
       "id": "g06",
@@ -163,7 +166,8 @@
       },
       "cout_usd": 0.009493,
       "latency_ms": 2345.3249000012875,
-      "note_a_la_main": null
+      "note_a_la_main": 2,
+      "commentaire_mainteneur": "Pas une question médicale : une réponse moyenne sur la pratique des gens est attendue."
     },
     {
       "id": "g07",
@@ -186,7 +190,8 @@
       },
       "cout_usd": 0.009583,
       "latency_ms": 2341.453499859199,
-      "note_a_la_main": null
+      "note_a_la_main": 2,
+      "commentaire_mainteneur": "Pas une question médicale : une réponse moyenne sur la pratique des gens est attendue."
     },
     {
       "id": "g08",
@@ -209,7 +214,8 @@
       },
       "cout_usd": 0.0096755,
       "latency_ms": 1680.2052001003176,
-      "note_a_la_main": null
+      "note_a_la_main": 7,
+      "commentaire_mainteneur": "Correct mais refuse sans rien proposer : dire qu'Ova feed est en cours de développement et répondra bientôt à ce besoin."
     },
     {
       "id": "g09",
@@ -232,7 +238,7 @@
       },
       "cout_usd": 0.009468,
       "latency_ms": 2439.369399799034,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g10",
@@ -255,7 +261,7 @@
       },
       "cout_usd": 0.009268,
       "latency_ms": 1570.8671000320464,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g11",
@@ -278,7 +284,7 @@
       },
       "cout_usd": 0.009443,
       "latency_ms": 2052.414500154555,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g12",
@@ -301,7 +307,8 @@
       },
       "cout_usd": 0.0093505,
       "latency_ms": 2489.618099993095,
-      "note_a_la_main": null
+      "note_a_la_main": 7,
+      "commentaire_mainteneur": "Correct mais refuse sans rien proposer : dire qu'Ova feed est en cours de développement et répondra bientôt à ce besoin."
     },
     {
       "id": "g13",
@@ -324,7 +331,7 @@
       },
       "cout_usd": 0.009358,
       "latency_ms": 2608.2591998856515,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g14",
@@ -347,7 +354,7 @@
       },
       "cout_usd": 0.009483,
       "latency_ms": 2087.255100021139,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "g15",
@@ -370,7 +377,7 @@
       },
       "cout_usd": 0.009518,
       "latency_ms": 2062.2946999501437,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c01",
@@ -393,7 +400,8 @@
       },
       "cout_usd": 0.0095605,
       "latency_ms": 2362.980999983847,
-      "note_a_la_main": null
+      "note_a_la_main": 2,
+      "commentaire_mainteneur": "Pas une question médicale : une réponse moyenne sur la pratique des gens est attendue."
     },
     {
       "id": "c02",
@@ -418,7 +426,8 @@
       },
       "cout_usd": 0.0137258,
       "latency_ms": 5777.948300121352,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "Question typique à laquelle le coach doit pouvoir répondre."
     },
     {
       "id": "c03",
@@ -441,7 +450,8 @@
       },
       "cout_usd": 0.010158,
       "latency_ms": 3036.504899850115,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "Question typique à laquelle le coach doit pouvoir répondre."
     },
     {
       "id": "c04",
@@ -465,7 +475,7 @@
       },
       "cout_usd": 0.011145700000000001,
       "latency_ms": 3845.0867000501603,
-      "note_a_la_main": null
+      "note_a_la_main": 10
     },
     {
       "id": "c05",
@@ -488,7 +498,12 @@
       },
       "cout_usd": 0.0107905,
       "latency_ms": 3621.782299829647,
-      "note_a_la_main": null
+      "note_a_la_main": 1,
+      "commentaire_mainteneur": "Question typique à laquelle le coach doit pouvoir répondre."
     }
-  ]
+  ],
+  "notation": {
+    "echelle": "0 à 10, par le mainteneur, le 26/11/2026",
+    "seuil_reussite_retenu": "≥ 7 (à confirmer)"
+  }
 }
