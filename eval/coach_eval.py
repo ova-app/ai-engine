@@ -58,11 +58,12 @@ def cost_usd(models: list[str], usage: dict) -> float | str:
     ) / 1e6
 
 
-def run(items: list[dict], llm, model: str = MODEL) -> list[dict]:
+def run(items: list[dict], llm, model: str = MODEL, verify: bool = False) -> list[dict]:
     con = connect()
     rows = []
     for item in items:
-        coach = Coach(llm, Toolbox(SqliteStore(con, item["user_id"]), EXERCISES), model=model)
+        toolbox = Toolbox(SqliteStore(con, item["user_id"]), EXERCISES)
+        coach = Coach(llm, toolbox, model=model, verify=verify)
         start = time.perf_counter()
         answer = coach.ask(item["question"], TODAY)
         latency_ms = (time.perf_counter() - start) * 1000
@@ -85,6 +86,7 @@ def run(items: list[dict], llm, model: str = MODEL) -> list[dict]:
                 "precision_seances": precision,
                 "rappel_seances": recall,
                 "outils": answer.tool_calls,
+                "verification": answer.verification,
                 "tours": answer.turns,
                 "modeles": sorted(set(answer.models)),
                 "jetons": usage,
@@ -118,15 +120,17 @@ def summarize(rows: list[dict]) -> dict:
         },
         "cout_usd_par_question": round(sum(costs) / len(costs), 5) if known else "à mesurer",
         "non_terminees": sum(1 for r in rows if not r["reponse"]["terminee"]),
+        "remplacees_par_la_verification": sum(1 for r in rows if r["verification"]["remplacee"]),
     }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--verifier", action="store_true", help="variante A3 avec vérification")
     args = parser.parse_args()
     items = load_dev("coach")[: args.limit]
-    rows = run(items, AnthropicLLM())
+    rows = run(items, AnthropicLLM(), verify=args.verifier)
     result = {
         "date": date.today().isoformat(),
         "fonction": "coach",
@@ -144,13 +148,14 @@ def main() -> None:
             "temperature": "non réglable (refusée par l'API sur ce modèle)",
             "repli_serveur": AnthropicLLM.FALLBACK_BETA,
             "date_du_jour_donnee": TODAY.isoformat(),
+            "verification_des_chiffres": args.verifier,
         },
         "tarifs_usd_par_million": PRICES,
         "mesures": summarize(rows),
         "questions": rows,
     }
     RESULTS_DIR.mkdir(exist_ok=True)
-    suffix = "_essai" if args.limit else ""
+    suffix = ("_verif" if args.verifier else "") + ("_essai" if args.limit else "")
     path = RESULTS_DIR / f"{result['date']}_coach_{MODEL}{suffix}.json"
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result["mesures"]["global"], ensure_ascii=False))
