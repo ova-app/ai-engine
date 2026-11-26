@@ -8,12 +8,12 @@ from datetime import date, datetime, timedelta
 
 import pytest
 
+from app.coach.catalogue import EXERCISES
 from app.coach.data import paris_bounds, paris_date, round_half_up
 from app.coach.tools import Toolbox, ToolError
 from eval.coach.score import exact, sessions_scores
 from eval.coach.store import SqliteStore
 from eval.datasets import load_dev
-from eval.synth.generate_accounts import EXERCISES
 from eval.synth.sqlite_db import connect
 
 ITEMS = load_dev("coach")

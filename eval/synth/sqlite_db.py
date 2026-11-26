@@ -12,7 +12,8 @@ import sqlite3
 import uuid
 from pathlib import Path
 
-from eval.synth.generate_accounts import EXERCISE_GROUPS, EXERCISES, NAMESPACE, OUT
+from app.coach.catalogue import EXERCISES
+from eval.synth.generate_accounts import EXERCISE_GROUPS, NAMESPACE, OUT
 
 DDL = """
 CREATE TABLE exercises (

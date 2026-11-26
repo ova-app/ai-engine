@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from app.coach.catalogue import EXERCISES
 from eval.synth import generate_accounts as g
 from eval.synth.sqlite_db import connect
 
@@ -78,7 +79,7 @@ def test_profils_distincts(workouts):
 
 def test_codes_connus_et_exercices_jamais_pratiques(workouts):
     used = {e.code for w in workouts for e in w.exercises}
-    assert used <= set(g.EXERCISES)
+    assert used <= set(EXERCISES)
     assert {"kettlebell-swing", "farmer-walk", "machine-leg-extension"}.isdisjoint(used)
 
 
@@ -99,6 +100,6 @@ def test_chargement_sqlite(workouts):
 def test_codes_presents_dans_le_catalogue():
     with CATALOGUE.open(encoding="utf-8") as f:
         catalogue = {row["code"]: row for row in csv.DictReader(f)}
-    for code, muscle in g.EXERCISES.items():
+    for code, muscle in EXERCISES.items():
         assert code in catalogue, code
         assert catalogue[code]["muscles_primaires"].split("|")[0] == muscle, code

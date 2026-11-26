@@ -3,10 +3,11 @@
 import hashlib
 import json
 
+from app.coach.catalogue import EXERCISES
 from eval import split
 from eval.coach import generate_leg_questions as gl
 from eval.datasets import SETS_DIR, load_dev
-from eval.synth.generate_accounts import EXERCISE_GROUPS, EXERCISES
+from eval.synth.generate_accounts import EXERCISE_GROUPS
 from eval.synth.sqlite_db import connect
 
 

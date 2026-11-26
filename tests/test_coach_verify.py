@@ -6,10 +6,11 @@ from types import SimpleNamespace as NS
 import pytest
 
 from app.coach.agent import UNVERIFIED, Coach
+from app.coach.catalogue import EXERCISES
 from app.coach.tools import Toolbox
 from app.coach.verify import numbers_in_text, unsupported
 from eval.coach.store import SqliteStore
-from eval.synth.generate_accounts import EXERCISES, user_id
+from eval.synth.generate_accounts import user_id
 from eval.synth.sqlite_db import connect
 
 RESULT = {"ref": "r1", "volume_kg": 3650.5, "seances": 3, "difference_kg": -1200.0}
