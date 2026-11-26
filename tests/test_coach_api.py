@@ -2,6 +2,7 @@
 
 import urllib.error
 from types import SimpleNamespace as NS
+from typing import Annotated
 
 import pytest
 from fastapi.testclient import TestClient
@@ -71,7 +72,7 @@ class EmptyStore:
         return []
 
 
-def _store(token: str = api.Depends(api.user_token)):
+def _store(user: Annotated[api.User, api.Depends(api.current_user)]):
     return EmptyStore()
 
 
@@ -156,9 +157,10 @@ def test_echec_sans_detail(env, client):
 
 def test_base_lue_avec_le_jeton_de_l_utilisateur():
     config = api.Settings("https://x.supabase.co", "anon", frozenset({USER}))
-    store = api.user_store("jwt-u", config)
+    store = api.user_store(api.User(USER, "jwt-u"), config)
     assert isinstance(store, SupabaseStore)
     assert store.headers["Authorization"] == "Bearer jwt-u"
+    assert store.user_id == USER
 
 
 @pytest.mark.parametrize("code, attendu", [(401, None), (403, None), (500, "erreur")])
