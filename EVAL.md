@@ -101,3 +101,4 @@ Trois au maximum par phase, **déclarées ici avant toute mesure**. Une ablation
 |---|---|---|
 | 18/11/2026 | Version 0 | — |
 | 24/11/2026 | Note d'infrastructure, sans effet sur le protocole : l'alerte AWS Budgets fonctionne. Le compte AWS n'a pas de limite de dépense réglable : le plafond de crédits du compte la remplace. | Documenter le contrôle du coût réellement en place (règle 8 de CLAUDE.md). |
+| 25/11/2026 | Seuils du §4 validés par le mainteneur tels que proposés (recall@5 exercices ≥ 0,80 ; coach ≥ 0,85 ; refus ≥ 14/15, faux refus ≤ 1/5 ; appels d'offres ≥ 0,75 ; fidélité ≥ 0,90 ; seuils CI associés). Le seuil d'accord du juge (§6, 85 %) reste « proposé ». Aucun test n'a encore été lancé. | Étape 2 de la reprise du plan : seuils fixés avant la première mesure. |
