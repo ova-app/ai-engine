@@ -16,6 +16,7 @@ from datetime import date
 from typing import Any, Protocol
 
 from app.coach.tools import DEFINITIONS, Toolbox, ToolError
+from app.coach.verify import unsupported
 
 MODEL = "claude-sonnet-5-5"  # choix du mainteneur : coût
 EFFORT = "low"
@@ -106,11 +107,42 @@ class CoachAnswer:
     usage: Usage = field(default_factory=Usage)
     turns: int = 0
     finished: bool = True  # faux : plafond atteint ou modèle arrêté sans `repondre`
+    verification: dict = field(
+        default_factory=lambda: {"rejets": [], "reecritures": 0, "remplacee": False}
+    )
+
+
+UNVERIFIED = {
+    "texte": "Je n'ai pas pu vérifier ce chiffre dans ton historique, je préfère ne pas le donner.",
+    "valeur": None,
+    "unite": None,
+}
+
+
+def _rejection(block: Any, bad: list[float]) -> dict:
+    listed = ", ".join(f"{n:g}" for n in bad)
+    return {
+        "type": "tool_result",
+        "tool_use_id": block.id,
+        "content": f"Réponse refusée : ces nombres ne figurent dans aucun résultat d'outil : "
+        f"{listed}. Réécris la réponse avec les seuls nombres des résultats d'outils, puis "
+        "rappelle repondre.",
+        "is_error": True,
+    }
 
 
 class Coach:
-    def __init__(self, llm: LLM, toolbox: Toolbox, model: str = MODEL, effort: str = EFFORT):
+    def __init__(
+        self,
+        llm: LLM,
+        toolbox: Toolbox,
+        model: str = MODEL,
+        effort: str = EFFORT,
+        verify: bool = False,
+    ):
+        """`verify` : variante « avec vérification des chiffres » de l'ablation A3."""
         self.llm, self.toolbox, self.model, self.effort = llm, toolbox, model, effort
+        self.verify = verify
 
     def request(self, messages: list) -> dict:
         return {
@@ -139,16 +171,38 @@ class Coach:
                 continue
             uses = [b for b in response.content if b.type == "tool_use"]
             final = next((b for b in uses if b.name == "repondre"), None)
+            bad: list[float] = []
             if final is not None:
-                return self._finish(answer, final.input, refs)
+                bad = self._check(answer, final.input)
+                if not bad:
+                    return self._finish(answer, final.input, refs)
+                if answer.verification["reecritures"] >= 1:
+                    answer.verification["remplacee"] = True
+                    return self._finish(answer, {**final.input, **UNVERIFIED}, refs)
+                answer.verification["reecritures"] += 1
             if not uses:
                 answer.texte = "".join(b.text for b in response.content if b.type == "text")
                 return answer
             results = []
             for block in uses:
-                results.append(self._run_tool(block, refs, answer))
+                if block.name == "repondre":
+                    results.append(_rejection(block, bad))
+                else:
+                    results.append(self._run_tool(block, refs, answer))
             messages.append({"role": "user", "content": results})
         return answer
+
+    def _check(self, answer: CoachAnswer, args: dict) -> list[float]:
+        """A3 : nombres de la réponse non soutenus par les outils (vide sans vérification)."""
+        if not self.verify:
+            return []
+        results = [c["resultat"] for c in answer.tool_calls if "resultat" in c]
+        valeur = args.get("valeur")
+        valeur = float(valeur) if isinstance(valeur, int | float) else None
+        bad = unsupported(args.get("texte", ""), valeur, args.get("unite"), results)
+        if bad:
+            answer.verification["rejets"].append(bad)
+        return bad
 
     def _run_tool(self, block: Any, refs: dict[str, set[str]], answer: CoachAnswer) -> dict:
         call = {"outil": block.name, "arguments": block.input}
